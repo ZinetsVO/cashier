@@ -1,0 +1,19 @@
+.header {
+    height: 120px;
+    width: 100%;
+    background-color: #7BC0FF;
+}
+
+.header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav__list {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
