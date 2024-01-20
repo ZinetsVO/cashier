@@ -11,8 +11,13 @@
 }
 
 .nav__list {
+    list-style: none;
     display: flex;
-    justify-content: space-between;
+    gap: 30px;
+}
+
+.header__item a {
+    font-size: var(--text-font);
 }
 
 
