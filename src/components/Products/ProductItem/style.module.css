@@ -1,0 +1,16 @@
+.row {
+    width: 100%;
+    
+}
+
+
+.row__item {
+    line-height: 29px;
+    padding-bottom: 30px;
+    width: 33%;
+    font-size: var(--text-font);
+    padding-right: 20px;
+    word-wrap: break-word;
+    text-align: center;
+}
+
