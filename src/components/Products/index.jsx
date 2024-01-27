@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductItem from "./ProductItem";
 import css from "./style.module.css"
+import AddProduct from "./AddProduct";
 
 const Products = () => {
   const TOKEN = process.env.NEXT_PUBLIC_API;
@@ -34,6 +35,7 @@ const Products = () => {
   return (
     <section>
       <div className="container">
+        <AddProduct/>
         {error ? (
           <p>Помилка при отриманні даних: {error}</p>
         ) : (
@@ -43,12 +45,16 @@ const Products = () => {
                 <th className={css.table__title}>Name</th>
                 <th className={css.table__title}>Purchase price</th>
                 <th className={css.table__title}>Sale price</th>
+                <th className={css.table__title}>Profit</th>
               </tr>
             </thead>
+            <tbody>
             {products.map((product) => (
             <ProductItem key={product.id} product={product}/>
             ))}
+            </tbody>
           </table>
+          
         )}
       </div>
     </section>

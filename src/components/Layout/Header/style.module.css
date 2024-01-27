@@ -17,8 +17,16 @@
     gap: 30px;
 }
 
+
+
+
+
 .header__item a {
     font-size: var(--text-font);
+}
+
+.active {
+    color: var(--bg-color);
 }
 
 
