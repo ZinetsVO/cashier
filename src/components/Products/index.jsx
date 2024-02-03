@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductItem from "./ProductItem";
-import css from "./style.module.css"
+import css from "./style.module.css";
 import AddProduct from "./AddProduct";
+import { URL } from "@/helpers/constants";
 
 const Products = () => {
-  const TOKEN = process.env.NEXT_PUBLIC_API;
-  const URL = `https://${TOKEN}.mockapi.io/product`;
-
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
@@ -25,8 +23,7 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  console.log(error);
-  console.log(products);
+
 
   if (error) {
     return <p>Помилка при отриманні даних: {error}</p>;
@@ -35,13 +32,13 @@ const Products = () => {
   return (
     <section>
       <div className="container">
-        <AddProduct/>
+        <AddProduct />
         {error ? (
           <p>Помилка при отриманні даних: {error}</p>
         ) : (
           <table className={css.products__table}>
             <thead>
-              <tr >
+              <tr>
                 <th className={css.table__title}>Name</th>
                 <th className={css.table__title}>Purchase price</th>
                 <th className={css.table__title}>Sale price</th>
@@ -49,12 +46,11 @@ const Products = () => {
               </tr>
             </thead>
             <tbody>
-            {products.map((product) => (
-            <ProductItem key={product.id} product={product}/>
-            ))}
+              {products.map((product) => (
+                <ProductItem key={product.id} product={product} />
+              ))}
             </tbody>
           </table>
-          
         )}
       </div>
     </section>
