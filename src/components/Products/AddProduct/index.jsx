@@ -16,6 +16,8 @@ const AddProduct = () => {
     sale_price: 0,
   });
 
+  
+
   const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
@@ -57,66 +59,66 @@ const AddProduct = () => {
 
   return (
     <>
+      <button className={css.add__button} onClick={() => handleShow()}>
+        <IoAddCircleOutline size={30} />
+      </button>
       {!show ? (
-        <button className={css.add__button} onClick={() => handleShow()}>
-          <IoAddCircleOutline size={30} />
-        </button>
+        ""
       ) : (
-        <div className={css.form__bg}>
-          <div className={ show ? ` ${css.form__wrapper} ${css.active} ` : css.form__wrapper}>
-          <button onClick={handleShow} className={css.close__button}>
-            <FaXmark size={30} />
-            Close
-          </button>
-          <form
-            className={css.form}
-            onSubmit={onSubmit}
+        <div className={css.form__bg} onClick={handleShow}>
+          <div
+            className={css.form__wrapper}
+            onClick={(e) => e.stopPropagation()}
           >
-            <label>
-              <p>name</p>
-              <input
-                className={css.form__input}
-                type="text"
-                placeholder="name"
-                name="name"
-                onChange={handleChange}
-                value={formData.name}
-              />
-            </label>
-            <label>
-              <p> purchase price</p>
-
-              <input
-                min={0}
-                className={css.form__input}
-                type="number"
-                placeholder="purchase price"
-                name="purchase_price"
-                onChange={handleChange}
-                value={formData.purchase_price}
-              />
-            </label>
-            <label>
-              <p> sale price</p>
-
-              <input
-                min={0}
-                className={css.form__input}
-                type="number"
-                placeholder="sale price"
-                name="sale_price"
-                onChange={handleChange}
-                value={formData.sale_price}
-              />
-            </label>
-
-            <button className={css.confirm__button} disabled={isDisabled}>
-              <IoMdCheckmark size={30} />
-              Add
+            <button onClick={handleShow} className={css.close__button}>
+              <FaXmark size={30} />
+              Close
             </button>
-          </form>
-          
-        </div>
+            <form className={css.form} onSubmit={onSubmit}>
+              <label>
+                <p>name</p>
+                <input
+                  className={css.form__input}
+                  type="text"
+                  placeholder="name"
+                  name="name"
+                  onChange={handleChange}
+                  value={formData.name}
+                />
+              </label>
+              <label>
+                <p> purchase price</p>
+
+                <input
+                  min={0}
+                  className={css.form__input}
+                  type="number"
+                  placeholder="purchase price"
+                  name="purchase_price"
+                  onChange={handleChange}
+                  value={formData.purchase_price}
+                />
+              </label>
+              <label>
+                <p> sale price</p>
+
+                <input
+                  min={0}
+                  className={css.form__input}
+                  type="number"
+                  placeholder="sale price"
+                  name="sale_price"
+                  onChange={handleChange}
+                  value={formData.sale_price}
+                />
+              </label>
+
+              <button className={css.confirm__button} disabled={isDisabled}>
+                <IoMdCheckmark size={30} />
+                Add
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </>

@@ -10,18 +10,18 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await axios.get(URL);
-        setProducts(response.data);
-      } catch (error) {
-        setError(error.message);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     try {
+  //       const response = await axios.get(URL);
+  //       setProducts(response.data);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     }
+  //   }
 
-    fetchProducts();
-  }, []);
+  //   fetchProducts();
+  // }, []);
 
 
 
