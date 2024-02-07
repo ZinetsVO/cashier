@@ -1,27 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+
 import ProductItem from "./ProductItem";
 import css from "./style.module.css";
 import AddProduct from "./AddProduct";
-import { URL } from "@/helpers/constants";
+
+import { useProduct } from "../Context";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   async function fetchProducts() {
-  //     try {
-  //       const response = await axios.get(URL);
-  //       setProducts(response.data);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     }
-  //   }
+ const {products, error} = useProduct()
 
-  //   fetchProducts();
-  // }, []);
 
 
 
@@ -46,7 +35,7 @@ const Products = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {products?.map((product) => (
                 <ProductItem key={product.id} product={product} />
               ))}
             </tbody>

@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import css from "./style.module.css";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoMdCheckmark } from "react-icons/io";
 import { FaXmark } from "react-icons/fa6";
-import axios from "axios";
-import { URL } from "@/helpers/constants";
-import { handleSubmit } from "@/helpers/api";
+import { useProduct } from "@/components/Context";
 
 const AddProduct = () => {
+  const { handleSubmit, fetchProducts } = useProduct();
+
   const [formData, setFormData] = useState({
     id: uuidv4(),
     name: "",
     purchase_price: 0,
     sale_price: 0,
   });
-
-  
 
   const [show, setShow] = useState(false);
 
@@ -42,6 +40,8 @@ const AddProduct = () => {
         sale_price: 0,
       }));
     }
+
+    fetchProducts();
   };
 
   const handleShow = () => {

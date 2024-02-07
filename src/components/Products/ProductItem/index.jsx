@@ -2,20 +2,23 @@
 import React, { useEffect } from "react";
 import css from "./style.module.css";
 import { MdDeleteOutline } from "react-icons/md";
-import axios from "axios";
-import { URL } from "@/helpers/constants";
-import { handleDelete } from "@/helpers/api";
+import { useProduct } from "@/components/Context";
+import { MdEdit } from "react-icons/md";
 
 const ProductItem = ({ product }) => {
   const { name, purchase_price, sale_price, date, id } = product;
-  
 
+  const { fetchProducts, handleDelete } = useProduct();
 
   const onDelete = async () => {
-    await handleDelete(id)
-  }
-
-  
+    const isDelete = confirm("Are you sure?");
+    if (isDelete) {
+      const response = await handleDelete(id);
+      if (response.status >= 200 && response.status < 300) {
+        fetchProducts();
+      }
+    }
+  };
 
   const profit = sale_price - purchase_price;
   return (
@@ -27,6 +30,11 @@ const ProductItem = ({ product }) => {
       <td className={css.row__item}>
         <button className={css.delete__button} onClick={onDelete}>
           Delete <MdDeleteOutline size={30} />
+        </button>
+      </td>
+      <td className={css.row__item}>
+        <button className={css.edit__button} >
+          Edit <MdEdit size={30} />
         </button>
       </td>
     </tr>
