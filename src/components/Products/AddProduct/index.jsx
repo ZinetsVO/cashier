@@ -5,16 +5,27 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { IoMdCheckmark } from "react-icons/io";
 import { FaXmark } from "react-icons/fa6";
 import { useProduct } from "@/components/Context";
+import { MdEdit } from "react-icons/md";
 
-const AddProduct = () => {
-  const { handleSubmit, fetchProducts } = useProduct();
 
-  const [formData, setFormData] = useState({
-    id: uuidv4(),
-    name: "",
-    purchase_price: 0,
-    sale_price: 0,
-  });
+const AddProduct = ({ edit, product }) => {
+  const { handleSubmit, fetchProducts , handleEdit} = useProduct();
+
+  const defaultData = edit
+    ? {
+        id: product.id,
+        name: product.name,
+        purchase_price: product.purchase_price,
+        sale_price: product.sale_price,
+      }
+    : {
+        id: uuidv4(),
+        name: "",
+        purchase_price: 0,
+        sale_price: 0,
+      };
+
+  const [formData, setFormData] = useState(defaultData);
 
   const [show, setShow] = useState(false);
 
@@ -29,16 +40,28 @@ const AddProduct = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const success = await handleSubmit(formData);
-
-    if (success) {
-      console.log("Successfull post on MockAPI");
-      setFormData(() => ({
-        id: uuidv4(),
-        name: "",
-        purchase_price: 0,
-        sale_price: 0,
-      }));
+    if (edit) {
+      const success = await handleEdit(defaultData.id, formData);
+      if (success) {
+        console.log("Successfull post on MockAPI");
+        setFormData((prevData) => ({
+          id: prevData.id,
+          name: prevData.name,
+          purchase_price: prevData.purchase_price,
+          sale_price: prevData.sale_price,
+        }));
+      }
+    } else {
+      const success = await handleSubmit(formData);
+      if (success) {
+        console.log("Successfull post on MockAPI");
+        setFormData(() => ({
+          id: uuidv4(),
+          name: "",
+          purchase_price: 0,
+          sale_price: 0,
+        }));
+      }
     }
 
     fetchProducts();
@@ -46,12 +69,12 @@ const AddProduct = () => {
 
   const handleShow = () => {
     setShow(!show);
-    setFormData(() => ({
-      id: uuidv4(),
-      name: "",
-      purchase_price: 0,
-      sale_price: 0,
-    }));
+    // setFormData(() => ({
+    //   id: uuidv4(),
+    //   name: "",
+    //   purchase_price: 0,
+    //   sale_price: 0,
+    // }));
   };
 
   const isDisabled =
@@ -60,7 +83,7 @@ const AddProduct = () => {
   return (
     <>
       <button className={css.add__button} onClick={() => handleShow()}>
-        <IoAddCircleOutline size={30} />
+        {edit ? <MdEdit size={30} /> : <IoAddCircleOutline size={30} />}
       </button>
       {!show ? (
         ""

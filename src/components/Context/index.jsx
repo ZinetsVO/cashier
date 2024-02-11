@@ -45,8 +45,24 @@ export default function ProductProvider({ children }) {
     }
   };
 
+  const handleEdit =  (id, formData) =>{
+
+    try {
+      const response = axios.put(`${URL}/${id}`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      fetchProducts();
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
   return (
-    <ProductContext.Provider value={{ products, fetchProducts, error, handleDelete, handleSubmit }}>
+    <ProductContext.Provider value={{ products, fetchProducts, error, handleDelete, handleSubmit, handleEdit }}>
       {children}
     </ProductContext.Provider>
   );
@@ -58,4 +74,5 @@ export function useProduct() {
     throw new Error("UseProduct must be used with productProvider");
   }
   return context;
+
 }
