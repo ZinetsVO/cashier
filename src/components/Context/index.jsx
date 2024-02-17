@@ -1,5 +1,12 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import axios from "axios";
 import { URL } from "@/helpers/constants";
 
@@ -9,7 +16,7 @@ export default function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const response = await axios.get(URL);
       setProducts(response.data);
@@ -17,15 +24,15 @@ export default function ProductProvider({ children }) {
       console.error(error);
       setError(error.message);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const handleSubmit = (formData) => {
+  const handleSubmit = useCallback(async (formData) => {
     try {
-      const response = axios.post(URL, formData, {
+      const response = await axios.post(URL, formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,35 +41,48 @@ export default function ProductProvider({ children }) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = useCallback((id) => {
     try {
       const response = axios.delete(`${URL}/${id}`);
       return response;
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
-  const handleEdit =  (id, formData) =>{
+  const handleEdit = useCallback(
+    (id, formData) => {
+      try {
+        const response = axios.put(`${URL}/${id}`, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        fetchProducts();
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [fetchProducts]
+  );
 
-    try {
-      const response = axios.put(`${URL}/${id}`, formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      fetchProducts();
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-
-  }
+  const contextValue = useMemo(
+    () => ({
+      products,
+      fetchProducts,
+      error,
+      handleDelete,
+      handleSubmit,
+      handleEdit,
+    }),
+    [products, fetchProducts, error, handleDelete, handleSubmit, handleEdit]
+  );
 
   return (
-    <ProductContext.Provider value={{ products, fetchProducts, error, handleDelete, handleSubmit, handleEdit }}>
+    <ProductContext.Provider value={contextValue}>
       {children}
     </ProductContext.Provider>
   );
@@ -74,5 +94,4 @@ export function useProduct() {
     throw new Error("UseProduct must be used with productProvider");
   }
   return context;
-
 }

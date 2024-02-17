@@ -1,8 +1,9 @@
 import React from 'react'
+import CreateVisit from './CreateVisit'
 
 const Visits = () => {
   return (
-    <div>Visits</div>
+    <CreateVisit/>
   )
 }
 

@@ -65,6 +65,7 @@ const AddProduct = ({ edit, product }) => {
     }
 
     fetchProducts();
+    handleShow()
   };
 
   const handleShow = () => {

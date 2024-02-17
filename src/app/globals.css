@@ -1,13 +1,12 @@
 :root {
-  --popup-color:#7BC0FF;
+  --popup-color: #7bc0ff;
   --text-title: 26px;
   --text-font: 24px;
   --max-width: 1100px;
   --bg-color: #d3d3d3;
- 
+  --blured: rgba(0, 0, 0, 0.5);
+  --black: #000000;
 }
-
-
 
 * {
   box-sizing: border-box;
