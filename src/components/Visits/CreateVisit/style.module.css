@@ -37,9 +37,16 @@ overflow-y: scroll;
   border-collapse: collapse;
 }
 
+
+
 .visits__table td {
   padding: 10px;
   border: 1px solid var(--black);
+}
+
+.table__title {
+  padding:10px 0 ;
+  font-size: 18px;
 }
 
 .button__close {
@@ -47,8 +54,28 @@ overflow-y: scroll;
   top: 30px;
   left: 30px;
   font-size: 0;
+  border: none;
+  background-color: transparent;
 }
 
-.button__delete {
+.button__action {
+  cursor: pointer;
   font-size: 0px;
+  border: none;
+  background-color: transparent;
+  margin: auto;
+}
+
+.button__column {
+  width: 40px;
+}
+
+.button__submit { 
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 70px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
 }

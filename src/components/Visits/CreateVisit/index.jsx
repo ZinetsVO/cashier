@@ -22,13 +22,19 @@ const CreateVisit = () => {
   };
 
   const handleVisit = (product) => {
-    setVisit((prevVisit) => {
-      return [...prevVisit, product];
-    });
+    const doubleProduct = visit.find((item) => item.id === product.id);
+    if (doubleProduct) {
+      setVisit((prevVisit) =>
+        prevVisit.map((item) =>
+          item.id === product.id ? { ...item, count: item.count + 1 } : item
+        )
+      );
+    } else {
+      setVisit((prevVisit) => [...prevVisit, { ...product, count: 1 }]);
+    }
   };
-
   const totalPrice = visit.reduce((prevValue, item) => {
-    return parseInt(prevValue) + parseInt(item.sale_price);
+    return prevValue + item.sale_price * item.count;
   }, 0);
 
   return (
@@ -53,47 +59,57 @@ const CreateVisit = () => {
                       <th className={css.table__title}>Sale price</th>
                     </tr>
                   </thead>
-                  {products?.map((product) => (
-                    <tr key={product.id} className={css.row}>
-                      <td className={css.row__item}>{product.name}</td>
-                      <td className={css.row__item}>{product.sale_price}</td>
-                      <td>
-                        <button>
-                          <IoIosAddCircle
-                            size={30}
-                            onClick={() => handleVisit(product)}
-                          />
-                          Add
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  <tbody>
+                    {products?.map((product) => (
+                      <tr key={product.id} className={css.row}>
+                        <td className={css.row__item}>{product.name}</td>
+                        <td className={css.row__item}>{product.sale_price}</td>
+                        <td className={css.button__column}>
+                          <button className={css.button__action} onClick={() => handleVisit(product)}>
+                            <IoIosAddCircle size={30} />
+                            Add
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
 
-                <table>
+                <table className={css.visits__table}>
                   <thead>
                     <tr>
                       <th className={css.table__title}>Name</th>
                       <th className={css.table__title}>Sale price</th>
+                      <th className={css.table__title}>Count</th>
+                      <th className={css.table__title}>Summary</th>
                     </tr>
                   </thead>
-                  {visit?.map((product) => (
-                    <tr key={product.id} className={css.row}>
-                      <td className={css.row__item}>{product.name}</td>
-                      <td className={css.row__item}>{product.sale_price}</td>
-                      <td>
-                        <button className={css.button__delete}>
-                          <MdOutlineDeleteOutline size={30} />
-                          Delete
-                        </button>
-                      </td>
+                  <tbody>
+                    {visit?.map((product) => (
+                      <tr key={product.id} className={css.row}>
+                        <td className={css.row__item}>{product.name}</td>
+                        <td className={css.row__item}>{product.sale_price}</td>
+                        <td className={css.row__item}>{product.count}</td>
+                        <td className={css.row__item}>
+                          {product.count * product.sale_price}
+                        </td>
+
+                        <td className={css.button__column}>
+                          <button className={css.button__action}>
+                            <MdOutlineDeleteOutline size={30} />
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+
+                    <tr>
+                      <td className={css.row__item}>Total</td>
+                      <td className={css.row__item}> {totalPrice}</td>
                     </tr>
-                  ))}
-                  <tr>
-                    <td className={css.row__item}>Total</td>
-                    <td className={css.row__item}> {totalPrice}</td>
-                  </tr>
+                  </tbody>
                 </table>
+                <button className={css.button__submit}>Submit</button>
               </div>
             </div>
           </div>

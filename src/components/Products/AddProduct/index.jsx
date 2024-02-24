@@ -25,15 +25,21 @@ const AddProduct = ({ edit, product }) => {
         sale_price: 0,
       };
 
+
   const [formData, setFormData] = useState(defaultData);
+  console.log(formData);
+
+
 
   const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+      const newValue = type === 'number'? +value : value;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
