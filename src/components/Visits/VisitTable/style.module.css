@@ -1,0 +1,20 @@
+.button__close {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 0;
+    border: none;
+    background-color: transparent;
+  }
+  
+  .button__action {
+    cursor: pointer;
+    font-size: 0px;
+    border: none;
+    background-color: transparent;
+    margin: auto;
+  }
+  
+  .button__column {
+    width: 40px;
+  }

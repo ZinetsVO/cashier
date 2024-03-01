@@ -6,10 +6,12 @@ import { IoIosAddCircle } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import { FaRegWindowClose } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import VisitTable from "../VisitTable";
 
 const CreateVisit = () => {
   const [show, setShow] = useState(false);
   const [visit, setVisit] = useState([]);
+  const [findProduct, setFindProduct] = useState("");
 
   const { products, error } = useProduct();
 
@@ -37,6 +39,17 @@ const CreateVisit = () => {
     return prevValue + item.sale_price * item.count;
   }, 0);
 
+  const handleFindProduct = (e) => {
+    setFindProduct(e.target.value);
+    if (findProduct.length > 0) {
+      products.filter((item) => {
+        return products.name.includes(findProduct);
+      });
+    }
+  };
+
+  console.log(findProduct);
+
   return (
     <div>
       {!show ? (
@@ -52,6 +65,15 @@ const CreateVisit = () => {
                 <FaRegWindowClose size={30} />
               </button>
               <div className={css.tables__wrapper}>
+                {/* <label>
+                  <input
+                    type="text"
+                    placeholder="find product..."
+                    value={findProduct}
+                    onChange={handleFindProduct}
+                  />
+                </label> */}
+
                 <table className={css.visits__table}>
                   <thead>
                     <tr>
@@ -60,18 +82,11 @@ const CreateVisit = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {products?.map((product) => (
-                      <tr key={product.id} className={css.row}>
-                        <td className={css.row__item}>{product.name}</td>
-                        <td className={css.row__item}>{product.sale_price}</td>
-                        <td className={css.button__column}>
-                          <button className={css.button__action} onClick={() => handleVisit(product)}>
-                            <IoIosAddCircle size={30} />
-                            Add
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    <VisitTable
+                      array={products}
+                      priceTable={false}
+                      handleVisit={handleVisit}
+                    />
                   </tbody>
                 </table>
 
@@ -85,23 +100,11 @@ const CreateVisit = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {visit?.map((product) => (
-                      <tr key={product.id} className={css.row}>
-                        <td className={css.row__item}>{product.name}</td>
-                        <td className={css.row__item}>{product.sale_price}</td>
-                        <td className={css.row__item}>{product.count}</td>
-                        <td className={css.row__item}>
-                          {product.count * product.sale_price}
-                        </td>
-
-                        <td className={css.button__column}>
-                          <button className={css.button__action}>
-                            <MdOutlineDeleteOutline size={30} />
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    <VisitTable
+                      array={visit}
+                      priceTable={true}
+                      handleVisit={handleVisit}
+                    />
 
                     <tr>
                       <td className={css.row__item}>Total</td>
