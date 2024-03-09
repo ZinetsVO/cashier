@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import css from "./style.module.css";
 import { useProduct } from "@/components/Context";
-import { IoIosAddCircle } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import { FaRegWindowClose } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import VisitTable from "../VisitTable";
+import ProductTable from "../ProductTable";
 
 const CreateVisit = () => {
   const [show, setShow] = useState(false);
@@ -34,6 +34,17 @@ const CreateVisit = () => {
     } else {
       setVisit((prevVisit) => [...prevVisit, { ...product, count: 1 }]);
     }
+  };
+  
+  const handleDelete = (id) => {
+    const deleteProduct = visit.find((item) => item.id === id);
+    if (deleteProduct) {
+      setVisit((prevVisit) =>
+        prevVisit.filter((item) => 
+        item.id !== id
+        )
+      );
+    } 
   };
   const totalPrice = visit.reduce((prevValue, item) => {
     return prevValue + item.sale_price * item.count;
@@ -74,44 +85,9 @@ const CreateVisit = () => {
                   />
                 </label> */}
 
-                <table className={css.visits__table}>
-                  <thead>
-                    <tr>
-                      <th className={css.table__title}>Name</th>
-                      <th className={css.table__title}>Sale price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <VisitTable
-                      array={products}
-                      priceTable={false}
-                      handleVisit={handleVisit}
-                    />
-                  </tbody>
-                </table>
+                <ProductTable handleVisit={handleVisit}/>
 
-                <table className={css.visits__table}>
-                  <thead>
-                    <tr>
-                      <th className={css.table__title}>Name</th>
-                      <th className={css.table__title}>Sale price</th>
-                      <th className={css.table__title}>Count</th>
-                      <th className={css.table__title}>Summary</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <VisitTable
-                      array={visit}
-                      priceTable={true}
-                      handleVisit={handleVisit}
-                    />
-
-                    <tr>
-                      <td className={css.row__item}>Total</td>
-                      <td className={css.row__item}> {totalPrice}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <VisitTable visit={visit} handleDelete={handleDelete}/>
                 <button className={css.button__submit}>Submit</button>
               </div>
             </div>

@@ -21,11 +21,9 @@
   .visits__table td {
     padding: 10px;
     border: 1px solid var(--black);
-    text-align: center;
   }
   
   .table__title {
     padding:10px 0 ;
     font-size: 18px;
   }
-  
