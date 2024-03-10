@@ -7,11 +7,14 @@ import { FaRegWindowClose } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import VisitTable from "../VisitTable";
 import ProductTable from "../ProductTable";
+import { visitURL } from "@/helpers/constants";
+import axios from "axios";
 
 const CreateVisit = () => {
   const [show, setShow] = useState(false);
   const [visit, setVisit] = useState([]);
   const [findProduct, setFindProduct] = useState("");
+  const [visitData, setVisitData] = useState({});
 
   const { products, error } = useProduct();
 
@@ -35,16 +38,12 @@ const CreateVisit = () => {
       setVisit((prevVisit) => [...prevVisit, { ...product, count: 1 }]);
     }
   };
-  
+
   const handleDelete = (id) => {
     const deleteProduct = visit.find((item) => item.id === id);
     if (deleteProduct) {
-      setVisit((prevVisit) =>
-        prevVisit.filter((item) => 
-        item.id !== id
-        )
-      );
-    } 
+      setVisit((prevVisit) => prevVisit.filter((item) => item.id !== id));
+    }
   };
   const totalPrice = visit.reduce((prevValue, item) => {
     return prevValue + item.sale_price * item.count;
@@ -59,7 +58,37 @@ const CreateVisit = () => {
     }
   };
 
-  console.log(findProduct);
+  const getVisits = async () => {
+    const response = axios.get(visitURL);
+    setVisitData(response);
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      products: visit,
+      timestamp: Date.now(),
+    };
+
+    try {
+      const response = await axios.post(visitURL, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status >= 200 && response.status < 300) {
+        setVisit([]);
+        setShow(false);
+        getVisits();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getVisits();
+  }, []);
 
   return (
     <div>
@@ -85,10 +114,16 @@ const CreateVisit = () => {
                   />
                 </label> */}
 
-                <ProductTable handleVisit={handleVisit}/>
+                <ProductTable handleVisit={handleVisit} />
 
-                <VisitTable visit={visit} handleDelete={handleDelete}/>
-                <button className={css.button__submit}>Submit</button>
+                <VisitTable
+                  visit={visit}
+                  setVisit={setVisit}
+                  handleDelete={handleDelete}
+                />
+                <button className={css.button__submit} onClick={handleSubmit}>
+                  Submit
+                </button>
               </div>
             </div>
           </div>

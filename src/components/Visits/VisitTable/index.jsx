@@ -5,30 +5,37 @@ import css from "./style.module.css";
 import { IoMdAdd } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
 
-const VisitTable = ({ visit, handleDelete }) => {
+const VisitTable = ({ visit, setVisit, handleDelete }) => {
   const totalPrice = visit.reduce((prevValue, item) => {
     return prevValue + item.sale_price * item.count;
   }, 0);
 
-  const increment = (e) => {
-    // const productCount =  e.target.value;
-    // console.log(productCount);
-    //   setVisit((prevVisit) =>
-    //     prevVisit.map((item) =>
-    //       item.id === product.id ? { ...item, count: item.count + 1 } : item
-    //     )
-    //   );
-  }
+  const increment = (id) => {
+    setVisit((prevVisit) => {
+      const updateVisit = prevVisit.map((item) => {
+        if (id === item.id && item.count < 20) {
+          return { ...item, count: item.count + 1 };
+        }
+        return item;
+      });
+      return updateVisit;
+    });
+  };
 
-  const decrement = (e) => {
-    // const productCount =  e.target.value;
-    // console.log(productCount);
-    //   setVisit((prevVisit) =>
-    //     prevVisit.map((item) =>
-    //       item.id === product.id ? { ...item, count: item.count + 1 } : item
-    //     )
-      // );
-  }
+  const decrement = (id) => {
+    setVisit((prevVisit) => {
+      const updateVisit = prevVisit.map((item) => {
+        if (id === item.id && item.count > 1) {
+          return { ...item, count: item.count - 1 };
+        }
+        return item;
+      });
+      return updateVisit;
+    });
+  };
+
+
+
   return (
     <table className={css.visits__table}>
       <thead>
@@ -46,12 +53,20 @@ const VisitTable = ({ visit, handleDelete }) => {
             <td className={css.row__item}>{product.sale_price}</td>
 
             <td className={css.row__item}>
-              <button disabled={product.count <= 1} onClick={decrement}>
-                <FaMinus />
+              <button
+                className={css.button__action}
+                disabled={product.count <= 1}
+                onClick={() => decrement(product.id)}
+              >
+                <FaMinus size={20} />
               </button>
               {product.count}
-              <button disabled={product.count >= 20} onClick={increment}>
-              <IoMdAdd />
+              <button
+                className={css.button__action}
+                disabled={product.count >= 20}
+                onClick={() => increment(product.id)}
+              >
+                <IoMdAdd size={20} />
               </button>
             </td>
             <td className={css.row__item}>
