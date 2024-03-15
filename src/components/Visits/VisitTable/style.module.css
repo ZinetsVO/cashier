@@ -23,6 +23,11 @@
     border: 1px solid var(--black);
     text-align: center;
   }
+
+  .count__wrapper {
+    display: flex;
+    align-items: center;
+  }
   
   .table__title {
     padding:10px 0 ;

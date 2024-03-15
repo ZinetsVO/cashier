@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,  useEffect } from "react";
 import css from "./style.module.css";
 import { useProduct } from "@/components/Context";
 import { v4 as uuidv4 } from "uuid";
@@ -10,11 +10,10 @@ import ProductTable from "../ProductTable";
 import { visitURL } from "@/helpers/constants";
 import axios from "axios";
 
-const CreateVisit = () => {
+const CreateVisit = ({getVisits}) => {
   const [show, setShow] = useState(false);
   const [visit, setVisit] = useState([]);
   const [findProduct, setFindProduct] = useState("");
-  const [visitData, setVisitData] = useState({});
 
   const { products, error } = useProduct();
 
@@ -45,8 +44,12 @@ const CreateVisit = () => {
       setVisit((prevVisit) => prevVisit.filter((item) => item.id !== id));
     }
   };
-  const totalPrice = visit.reduce((prevValue, item) => {
+
+  const totalSalePrice = visit.reduce((prevValue, item) => {
     return prevValue + item.sale_price * item.count;
+  }, 0);
+  const totalPurchasePrice = visit.reduce((prevValue, item) => {
+    return prevValue + item.purchase_price * item.count;
   }, 0);
 
   const handleFindProduct = (e) => {
@@ -57,16 +60,16 @@ const CreateVisit = () => {
       });
     }
   };
-
-  const getVisits = async () => {
-    const response = axios.get(visitURL);
-    setVisitData(response);
-  };
+  
 
   const handleSubmit = async () => {
+
+
     const data = {
       products: visit,
       timestamp: Date.now(),
+      total_purachse_price: totalPurchasePrice,
+      total_sale_price: totalSalePrice
     };
 
     try {
@@ -79,16 +82,12 @@ const CreateVisit = () => {
       if (response.status >= 200 && response.status < 300) {
         setVisit([]);
         setShow(false);
-        getVisits();
+        getVisits()
       }
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    getVisits();
-  }, []);
 
   return (
     <div>

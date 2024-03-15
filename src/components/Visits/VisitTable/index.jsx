@@ -34,8 +34,6 @@ const VisitTable = ({ visit, setVisit, handleDelete }) => {
     });
   };
 
-
-
   return (
     <table className={css.visits__table}>
       <thead>
@@ -53,21 +51,23 @@ const VisitTable = ({ visit, setVisit, handleDelete }) => {
             <td className={css.row__item}>{product.sale_price}</td>
 
             <td className={css.row__item}>
-              <button
-                className={css.button__action}
-                disabled={product.count <= 1}
-                onClick={() => decrement(product.id)}
-              >
-                <FaMinus size={20} />
-              </button>
-              {product.count}
-              <button
-                className={css.button__action}
-                disabled={product.count >= 20}
-                onClick={() => increment(product.id)}
-              >
-                <IoMdAdd size={20} />
-              </button>
+              <div className={css.count__wrapper}>
+                <button
+                  className={css.button__action}
+                  disabled={product.count <= 1}
+                  onClick={() => decrement(product.id)}
+                >
+                  <FaMinus size={20} />
+                </button>
+                {product.count}
+                <button
+                  className={css.button__action}
+                  disabled={product.count >= 20}
+                  onClick={() => increment(product.id)}
+                >
+                  <IoMdAdd size={20} />
+                </button>
+              </div>
             </td>
             <td className={css.row__item}>
               {product.count * product.sale_price}
