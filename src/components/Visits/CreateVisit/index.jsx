@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,  useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import css from "./style.module.css";
 import { useProduct } from "@/components/Context";
 import { v4 as uuidv4 } from "uuid";
@@ -10,7 +10,7 @@ import ProductTable from "../ProductTable";
 import { visitURL } from "@/helpers/constants";
 import axios from "axios";
 
-const CreateVisit = ({getVisits}) => {
+const CreateVisit = ({ getVisits }) => {
   const [show, setShow] = useState(false);
   const [visit, setVisit] = useState([]);
   const [findProduct, setFindProduct] = useState("");
@@ -60,16 +60,13 @@ const CreateVisit = ({getVisits}) => {
       });
     }
   };
-  
 
   const handleSubmit = async () => {
-
-
     const data = {
       products: visit,
       timestamp: Date.now(),
       total_purachse_price: totalPurchasePrice,
-      total_sale_price: totalSalePrice
+      total_sale_price: totalSalePrice,
     };
 
     try {
@@ -82,7 +79,7 @@ const CreateVisit = ({getVisits}) => {
       if (response.status >= 200 && response.status < 300) {
         setVisit([]);
         setShow(false);
-        getVisits()
+        getVisits();
       }
     } catch (error) {
       console.error(error);
@@ -92,9 +89,7 @@ const CreateVisit = ({getVisits}) => {
   return (
     <div>
       {!show ? (
-        <div className="container">
-          <button onClick={handleShow}>Create visit</button>
-        </div>
+        <button className={css.create__visit__button} onClick={handleShow}>Create visit</button>
       ) : (
         <>
           <div className={css.popup__bg}>

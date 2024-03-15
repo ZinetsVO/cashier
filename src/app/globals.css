@@ -6,6 +6,8 @@
   --bg-color: #d3d3d3;
   --blured: rgba(0, 0, 0, 0.5);
   --black: #000000;
+  --white: #FFFFFF;
+  --unfocused: #696969;
 }
 
 * {

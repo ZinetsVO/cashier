@@ -35,10 +35,10 @@ console.log(i);
 
 
   return (
-    <>
+    <div className="container">
       <CreateVisit getVisits={getVisits} />
 
-      <ul>
+      <ul className={css.visit__list}>
         {visitData?.map( (item) => (
           <li className={css.visit} key={item.id}>
             
@@ -54,7 +54,7 @@ console.log(i);
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

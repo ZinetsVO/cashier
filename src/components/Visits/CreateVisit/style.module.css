@@ -33,6 +33,20 @@ overflow-y: scroll;
 
 }
 
+.create__visit__button {
+  border: none;
+  width: 120px;
+  height: 40px;
+  border-radius: 7px;
+  font-size: 18px;
+  margin-bottom: 40px;
+  background-color: var(--popup-color);
+}
+
+.create__visit__button:hover {
+  color: var(--bg-color);
+}
+
 .visits__table {
   border-collapse: collapse;
 }
