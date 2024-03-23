@@ -1,0 +1,7 @@
+.input__wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}

@@ -9,6 +9,7 @@ import VisitTable from "../VisitTable";
 import ProductTable from "../ProductTable";
 import { visitURL } from "@/helpers/constants";
 import axios from "axios";
+import moment from "moment";
 
 const CreateVisit = ({ getVisits }) => {
   const [show, setShow] = useState(false);
@@ -64,10 +65,12 @@ const CreateVisit = ({ getVisits }) => {
   const handleSubmit = async () => {
     const data = {
       products: visit,
-      timestamp: Date.now(),
+      timestamp: moment(),
       total_purachse_price: totalPurchasePrice,
       total_sale_price: totalSalePrice,
     };
+
+    console.log(data);
 
     try {
       const response = await axios.post(visitURL, data, {
