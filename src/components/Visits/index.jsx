@@ -61,7 +61,7 @@ const Visits = () => {
         {filteredData?.map((item) => (
           <li className={css.visit} key={item.id}>
             <span className={css.visit__date}>
-              {moment(item.timestamp).format("YYYY-MM-DD")}
+              {moment(item.timestamp).format("DD-MM-YY")}
             </span>
             <ol className={css.visit__products}>
               {item.products.map((i) => (

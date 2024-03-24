@@ -32,6 +32,17 @@ a {
   text-decoration: none;
 }
 
+input, button, select, textarea {
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}
+
 .container {
   max-width: 1440px;
   width: 100%;
@@ -44,3 +55,4 @@ a {
     color-scheme: dark;
   }
 }
+

@@ -65,7 +65,7 @@ const CreateVisit = ({ getVisits }) => {
   const handleSubmit = async () => {
     const data = {
       products: visit,
-      timestamp: moment(),
+      timestamp: new Date(),
       total_purachse_price: totalPurchasePrice,
       total_sale_price: totalSalePrice,
     };

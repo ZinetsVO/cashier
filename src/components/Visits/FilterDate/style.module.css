@@ -1,7 +1,19 @@
 .input__wrapper {
     margin-bottom: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: end;
+    
 }
+
+.date {
+    width: 150px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+}
+.reset__button {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--popup-color);
+}
+
