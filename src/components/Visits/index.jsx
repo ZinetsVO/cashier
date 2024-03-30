@@ -3,19 +3,27 @@ import React, { useEffect, useState } from "react";
 import CreateVisit from "./CreateVisit";
 import { visitURL } from "@/helpers/constants";
 import axios from "axios";
-import { formatDateString } from "@/helpers";
 import css from "./style.module.css";
 import FilterDate from "./FilterDate";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { uk } from "date-fns/locale/uk";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale("uk", uk);
 
 const Visits = () => {
   const [visitData, setVisitData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [dateRange, setDateRange] = useState([null, null]);
+
   const getVisits = async () => {
     try {
       const response = await axios.get(visitURL);
       setVisitData(response.data);
-      setFilteredData(response.data)
+      setFilteredData(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -25,20 +33,52 @@ const Visits = () => {
     getVisits();
   }, []);
 
-  const finalPurchasePrice = filteredData.reduce((prevValue, item)=> {
-    return  prevValue + item.total_purachse_price
-    
-  }, 0)
 
-  const finalsalePrice = filteredData.reduce((prevValue, item)=> {
-    return  prevValue + item.total_sale_price
-    
-  }, 0)
+  const handleStartDate = (date) => {
+    setDateRange([date, dateRange[1]]);
+    filtered();
+  };
 
-  const finalProfit = filteredData.reduce((prevValue, item)=> {
-    return  prevValue - item.total_purachse_price + item.total_sale_price
-    
-  }, 0)
+  const handleEndDate = (date) => {
+    setDateRange([dateRange[0], date]);
+    filtered();
+  };
+
+  const filtered = () => {
+    const newData = visitData.filter((item) => {
+      if (dateRange[0] && dateRange[1]) {
+        return moment(item.timestamp).isBetween(
+          dateRange[0],
+          dateRange[1],
+          null,
+          "[]"
+        );
+      }
+      return true;
+    });
+
+    setFilteredData(newData);
+
+    console.log(newData);
+    console.log("filter done!");
+  };
+
+  const clearDateInput = () => {
+    setDateRange([null, null]);
+    filtered();
+  };
+
+  const finalPurchasePrice = filteredData.reduce((prevValue, item) => {
+    return prevValue + item.total_purachse_price;
+  }, 0);
+
+  const finalsalePrice = filteredData.reduce((prevValue, item) => {
+    return prevValue + item.total_sale_price;
+  }, 0);
+
+  const finalProfit = filteredData.reduce((prevValue, item) => {
+    return prevValue - item.total_purachse_price + item.total_sale_price;
+  }, 0);
 
   return (
     <div className="container">
@@ -49,12 +89,13 @@ const Visits = () => {
         setFilteredData={setFilteredData}
       />
 
+    
       <div className={css.column_name_wrapper}>
-        <p>Date</p>
-        <p>Name</p>
-        <p>Total purchase price: {finalPurchasePrice}</p>
-        <p>Total sale price: {finalsalePrice}</p>
-        <p>Profit: {finalProfit}</p>
+        <p className={css.column__date}>Date</p>
+        <p className={css.column__name}>Name</p>
+        <p className={css.column__purchase}>Total purchase price: {finalPurchasePrice}</p>
+        <p className={css.column__sale}>Total sale price: {finalsalePrice}</p>
+        <p className={css.column__profit}>Profit: {finalProfit}</p>
       </div>
 
       <ul className={css.visit__list}>
@@ -74,7 +115,9 @@ const Visits = () => {
               {item.total_purachse_price}
             </div>
             <div className={css.visit__sale}>{item.total_sale_price}</div>
-            <div className={css.visit__profit}>{item.total_sale_price - item.total_purachse_price}</div>
+            <div className={css.visit__profit}>
+              {item.total_sale_price - item.total_purachse_price}
+            </div>
           </li>
         ))}
       </ul>

@@ -84,6 +84,18 @@ overflow-y: scroll;
   width: 40px;
 }
 
+.date__wrapper {
+  position: absolute;
+  top: 30px;
+  right: 120px;
+}
+
+.date {
+  width: 140px;
+  height: 30px;
+  padding-left: 15px;
+  border-radius: 5px;
+}
 .button__submit { 
   position: absolute;
   top: 30px;

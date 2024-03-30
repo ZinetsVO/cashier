@@ -10,37 +10,24 @@ import "react-datepicker/dist/react-datepicker.css";
 registerLocale("uk", uk);
 
 const FilterDate = ({ visitData, setFilteredData }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
   const [dateRange, setDateRange] = useState([null, null]);
-
-  const handleStartDate = (date) => {
-    setDateRange([date, dateRange[1]]);
-    filtered();
-  };
-
-  const handleEndDate = (date) => {
-    setDateRange([dateRange[0], date]);
-    filtered();
-  };
 
   const filtered = () => {
     const filteredData = visitData.filter((item) => {
       if (dateRange[0] && dateRange[1]) {
-        console.log(item.timestamp);
         return moment(item.timestamp).isBetween(
           dateRange[0],
           dateRange[1],
           null,
-          "[[]]"
+          "[]"
         );
       }
       return true;
     });
 
-    console.log("filteredData", filteredData);
     setFilteredData(filteredData);
+
+    console.log(filteredData);
   };
 
   const clearDateInput = () => {
@@ -53,7 +40,7 @@ const FilterDate = ({ visitData, setFilteredData }) => {
       <DatePicker
         className={css.date}
         selected={dateRange[0]}
-        onChange={(date) => handleStartDate(date)}
+        onChange={(date) => setDateRange([date, dateRange[1]])}
         selectsStart
         startDate={dateRange[0]}
         endDate={dateRange[1]}
@@ -65,7 +52,7 @@ const FilterDate = ({ visitData, setFilteredData }) => {
       <DatePicker
         className={css.date}
         selected={dateRange[1]}
-        onChange={(date) => handleEndDate(date)}
+        onChange={(date) => setDateRange([dateRange[0], date])}
         selectsEnd
         startDate={dateRange[0]}
         endDate={dateRange[1]}
@@ -73,6 +60,9 @@ const FilterDate = ({ visitData, setFilteredData }) => {
         placeholderText="End date"
         locale={"uk"}
       />
+       <button className={css.reset__button} onClick={() => filtered()}>
+        Apply
+      </button>
       <button className={css.reset__button} onClick={() => clearDateInput()}>
         Reset date
       </button>

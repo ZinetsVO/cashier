@@ -2,19 +2,21 @@
 import React, { useState, useEffect } from "react";
 import css from "./style.module.css";
 import { useProduct } from "@/components/Context";
-import { v4 as uuidv4 } from "uuid";
 import { FaRegWindowClose } from "react-icons/fa";
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import VisitTable from "../VisitTable";
 import ProductTable from "../ProductTable";
 import { visitURL } from "@/helpers/constants";
 import axios from "axios";
-import moment from "moment";
+
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const CreateVisit = ({ getVisits }) => {
   const [show, setShow] = useState(false);
   const [visit, setVisit] = useState([]);
   const [findProduct, setFindProduct] = useState("");
+  const [selectDate, setSelectDate] = useState(new Date());
 
   const { products, error } = useProduct();
 
@@ -65,7 +67,7 @@ const CreateVisit = ({ getVisits }) => {
   const handleSubmit = async () => {
     const data = {
       products: visit,
-      timestamp: new Date(),
+      timestamp: selectDate,
       total_purachse_price: totalPurchasePrice,
       total_sale_price: totalSalePrice,
     };
@@ -92,7 +94,9 @@ const CreateVisit = ({ getVisits }) => {
   return (
     <div>
       {!show ? (
-        <button className={css.create__visit__button} onClick={handleShow}>Create visit</button>
+        <button className={css.create__visit__button} onClick={handleShow}>
+          Create visit
+        </button>
       ) : (
         <>
           <div className={css.popup__bg}>
@@ -101,22 +105,25 @@ const CreateVisit = ({ getVisits }) => {
                 Close
                 <FaRegWindowClose size={30} />
               </button>
-              <div className={css.tables__wrapper}>
-                {/* <label>
-                  <input
-                    type="text"
-                    placeholder="find product..."
-                    value={findProduct}
-                    onChange={handleFindProduct}
-                  />
-                </label> */}
 
+              <div className={css.tables__wrapper}>
                 <ProductTable handleVisit={handleVisit} />
 
                 <VisitTable
                   visit={visit}
                   setVisit={setVisit}
                   handleDelete={handleDelete}
+                />
+
+                <DatePicker
+                  wrapperClassName={css.date__wrapper}
+                  className={css.date}
+                  selected={selectDate}
+                  onChange={(date) => setSelectDate(date)}
+                  selectsStart
+                  dateFormat={"dd-MM-yy"}
+                  placeholderText="Enter date"
+                  locale={"uk"}
                 />
                 <button className={css.button__submit} onClick={handleSubmit}>
                   Submit

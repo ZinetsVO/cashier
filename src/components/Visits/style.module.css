@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .visit__list {
@@ -31,4 +32,19 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.column__name {
+  flex-basis: 25%;
+}
+
+
+.column__purchase,
+.column__date,
+.column__sale {
+  flex-basis: 21%;
+}
+
+.column__profit {
+  flex-basis: 12%;
 }
