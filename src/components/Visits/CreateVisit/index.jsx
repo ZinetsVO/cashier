@@ -5,7 +5,7 @@ import { useProduct } from "@/components/Context";
 import { FaRegWindowClose } from "react-icons/fa";
 import VisitTable from "../VisitTable";
 import ProductTable from "../ProductTable";
-import { visitURL } from "@/helpers/constants";
+import { VISIT_URL } from "@/helpers/constants";
 import axios from "axios";
 
 import DatePicker from "react-datepicker";
@@ -75,7 +75,7 @@ const CreateVisit = ({ getVisits }) => {
     console.log(data);
 
     try {
-      const response = await axios.post(visitURL, data, {
+      const response = await axios.post(VISIT_URL, data, {
         headers: {
           "Content-Type": "application/json",
         },

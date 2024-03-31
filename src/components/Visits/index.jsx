@@ -9,6 +9,7 @@ import moment from "moment";
 import DatePicker from "react-datepicker";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { uk } from "date-fns/locale/uk";
+import { VISIT_URL } from "@/helpers/constants";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -21,9 +22,20 @@ const Visits = () => {
 
   const getVisits = async () => {
     try {
-      const response = await axios.get(visitURL);
+      const response = await axios.get(VISIT_URL);
       setVisitData(response.data);
       setFilteredData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${VISIT_URL}/${id}`);
+      if (response) {
+        getVisits();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -32,7 +44,6 @@ const Visits = () => {
   useEffect(() => {
     getVisits();
   }, []);
-
 
   const handleStartDate = (date) => {
     setDateRange([date, dateRange[1]]);
@@ -63,20 +74,15 @@ const Visits = () => {
     console.log("filter done!");
   };
 
-  const clearDateInput = () => {
-    setDateRange([null, null]);
-    filtered();
-  };
-
-  const finalPurchasePrice = filteredData.reduce((prevValue, item) => {
+  const finalPurchasePrice = filteredData?.reduce((prevValue, item) => {
     return prevValue + item.total_purachse_price;
   }, 0);
 
-  const finalsalePrice = filteredData.reduce((prevValue, item) => {
+  const finalsalePrice = filteredData?.reduce((prevValue, item) => {
     return prevValue + item.total_sale_price;
   }, 0);
 
-  const finalProfit = filteredData.reduce((prevValue, item) => {
+  const finalProfit = filteredData?.reduce((prevValue, item) => {
     return prevValue - item.total_purachse_price + item.total_sale_price;
   }, 0);
 
@@ -84,16 +90,14 @@ const Visits = () => {
     <div className="container">
       <CreateVisit getVisits={getVisits} />
 
-      <FilterDate
-        visitData={visitData}
-        setFilteredData={setFilteredData}
-      />
+      <FilterDate visitData={visitData} setFilteredData={setFilteredData} />
 
-    
       <div className={css.column_name_wrapper}>
         <p className={css.column__date}>Date</p>
         <p className={css.column__name}>Name</p>
-        <p className={css.column__purchase}>Total purchase price: {finalPurchasePrice}</p>
+        <p className={css.column__purchase}>
+          Total purchase price: {finalPurchasePrice}
+        </p>
         <p className={css.column__sale}>Total sale price: {finalsalePrice}</p>
         <p className={css.column__profit}>Profit: {finalProfit}</p>
       </div>
@@ -118,6 +122,12 @@ const Visits = () => {
             <div className={css.visit__profit}>
               {item.total_sale_price - item.total_purachse_price}
             </div>
+            <button
+              onClick={() => handleDelete(item.id)}
+              className={css.delete__button}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>

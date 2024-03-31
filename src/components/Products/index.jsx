@@ -9,9 +9,11 @@ import { useProduct } from "../Context";
 
 const Products = () => {
 
- const {products, error} = useProduct()
+ const {products, error, fetchProducts} = useProduct()
 
-
+ useEffect(() => {
+  fetchProducts();
+}, []);
 
 
   if (error) {

@@ -48,3 +48,21 @@
 .column__profit {
   flex-basis: 12%;
 }
+
+
+.delete__button {
+  flex-basis: auto;
+  color: #df0303;
+  background: #ffc4c4;
+  border: 1px solid #df0404;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+  white-space: nowrap;
+  letter-spacing: -0.14px;
+  border-radius: 4px;
+  width: 80px;
+  height: 29px;
+  
+}
