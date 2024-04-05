@@ -122,12 +122,12 @@ const Visits = () => {
             <div className={css.visit__profit}>
               {item.total_sale_price - item.total_purachse_price}
             </div>
-            <button
+            <div className={css.delete__wrapper}><button
               onClick={() => handleDelete(item.id)}
               className={css.delete__button}
             >
               Delete
-            </button>
+            </button></div>
           </li>
         ))}
       </ul>
