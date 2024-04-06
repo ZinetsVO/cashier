@@ -1,5 +1,5 @@
 .input__wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: end;
@@ -10,9 +10,17 @@
 .date {
   width: 150px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 10px;
   margin-right: 10px;
   border: 1px solid var(--unfocused);
+  font-size: var(--text-small);
+  font-weight: var(--weight-light);
+  transition: all .3s;
+}
+
+.date:focus {
+   border: 1px solid var(--unfocused);
+
 }
 
 
@@ -27,6 +35,10 @@
   font-size: 14px;
   font-weight: 500;
   transition: all .3s;
+}
+
+.reset__button:last-child {
+  margin: 0;
 }
 
 .reset__button:hover {

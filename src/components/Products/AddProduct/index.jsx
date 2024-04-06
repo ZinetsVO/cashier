@@ -6,6 +6,7 @@ import { IoMdCheckmark } from "react-icons/io";
 import { FaXmark } from "react-icons/fa6";
 import { useProduct } from "@/components/Context";
 import { MdEdit } from "react-icons/md";
+import classNames from "classnames";
 
 const AddProduct = ({ edit, product }) => {
   const { fetchProducts } = useProduct();
@@ -28,7 +29,7 @@ const AddProduct = ({ edit, product }) => {
   const [formData, setFormData] = useState(defaultData);
 
   const isDisabled =
-  !formData.name || formData.purchase_price - formData.sale_price >= 0;
+    !formData.name || formData.purchase_price - formData.sale_price >= 0;
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -105,8 +106,11 @@ const AddProduct = ({ edit, product }) => {
 
   return (
     <>
-      <button className={css.add__button} onClick={() => handleShow()}>
-        {edit ? <MdEdit size={30} /> : <IoAddCircleOutline size={30} />}
+      <button
+        className={`blue__button ${!edit ? css.add__button : css.edit__button}`}
+        onClick={() => handleShow()}
+      >
+        {edit ? <MdEdit size={30} /> : "Create product"}
       </button>
       {!show ? (
         ""
@@ -116,7 +120,7 @@ const AddProduct = ({ edit, product }) => {
             className={css.form__wrapper}
             onClick={(e) => e.stopPropagation()}
           >
-            <button onClick={handleShow} className={css.close__button}>
+            <button onClick={handleShow} className={classNames(css.close__button, 'red__button')}>
               <FaXmark size={30} />
               Close
             </button>
@@ -159,9 +163,8 @@ const AddProduct = ({ edit, product }) => {
                 />
               </label>
 
-              <button className={css.confirm__button} disabled={isDisabled}>
-                <IoMdCheckmark size={30} />
-                Add
+              <button className={classNames(css.confirm__button, 'blue__button')} disabled={isDisabled}>
+                {edit? 'Edit': 'Add'}
               </button>
             </form>
           </div>

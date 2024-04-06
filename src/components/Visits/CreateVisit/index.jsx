@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import css from "./style.module.css";
 import { useProduct } from "@/components/Context";
-import { FaRegWindowClose } from "react-icons/fa";
 import VisitTable from "../VisitTable";
 import ProductTable from "../ProductTable";
 import { VISIT_URL } from "@/helpers/constants";
@@ -11,6 +10,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import classNames from "classnames";
+import { FaXmark } from "react-icons/fa6";
 
 const CreateVisit = ({ getVisits }) => {
   const [show, setShow] = useState(false);
@@ -92,18 +93,21 @@ const CreateVisit = ({ getVisits }) => {
   };
 
   return (
-    <div>
+    <>
       {!show ? (
-        <button className={css.create__visit__button} onClick={handleShow}>
+        <button
+          className={classNames('blue__button', css.create__visit__button)}
+          onClick={handleShow}
+        >
           Create visit
         </button>
       ) : (
         <>
           <div className={css.popup__bg}>
             <div className={css.popup}>
-              <button className={css.button__close} onClick={handleShow}>
+              <button className={classNames(css.button__close, "red__button")} onClick={handleShow}>
                 Close
-                <FaRegWindowClose size={30} />
+                <FaXmark size={30} />
               </button>
 
               <div className={css.tables__wrapper}>
@@ -125,7 +129,7 @@ const CreateVisit = ({ getVisits }) => {
                   placeholderText="Enter date"
                   locale={"uk"}
                 />
-                <button className={css.button__submit} onClick={handleSubmit}>
+                <button className={classNames(css.button__submit, "blue__button")} onClick={handleSubmit}>
                   Submit
                 </button>
               </div>
@@ -133,7 +137,7 @@ const CreateVisit = ({ getVisits }) => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

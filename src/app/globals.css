@@ -1,17 +1,27 @@
 :root {
-  --popup-color: #7bc0ff;
-  --text-title: 26px;
-  --text-font: 24px;
-  --max-width: 1100px;
+  --max-width: 1440px;
+  --text-title: 18px;
+  --text-paragraph: 16px;
+  --text-small:14px;
+
+  --weight-bold:700;
+  --weight-normal:500;
+  --weight-light: 400;
+
   --bg-color: #ffffff;
-  --blured: rgba(0, 0, 0, 0.5);
-  --black: #000000;
-  --white: #FFFFFF;
-  --unfocused: #292D32;
-  --border-color: #eee;
-  --column-title: #B5B7C0;
+  --popup-color: #7bc0ff;
   --accent: #c4deff;
   --accent-border: #047adf;
+  --border-color: #eee;
+  --column-title: #b5b7c0;
+  --red: #df0404;
+  --light-red: #ffc4c4;
+  --black: #000000;
+  --white: #ffffff;
+  --blured: rgba(0, 0, 0, 0.5);
+  --unfocused: #292d32;
+
+
 }
 
 * {
@@ -36,7 +46,10 @@ a {
   text-decoration: none;
 }
 
-input, button, select, textarea {
+input,
+button,
+select,
+textarea {
   border: none;
   font: inherit;
   cursor: pointer;
@@ -47,11 +60,66 @@ input:focus {
   outline: none;
 }
 
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #3030305a;
+}
+
 .container {
-  max-width: 1440px;
+  max-width: var(--max-width);
   width: 100%;
   margin: 0 auto;
   padding: 0 10px;
+}
+
+.blue__button,
+.blue__button a {
+  font-size: var(--text-small);
+  font-weight: var(--weight-normal);
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: var(--accent);
+  color: var(--accent-border);
+  border: 1px solid var(--accent-border);
+  transition: all .3s;
+  cursor: pointer;
+}
+
+.blue__button:hover,
+.blue__button a:hover {
+  background-color: var(--accent-border);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.red__button,
+.red__button a {
+  font-size: var(--text-small);
+  font-weight: var(--weight-normal);
+  color: var(--red);
+  background-color: var(--light-red);
+  border: 1px solid var(--red);
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 5px;
+  transition: all .3s;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.red__button:hover,
+.red__button a:hover {
+  color: var(--light-red);
+  background-color: var(--red);
+  border: 1px solid var(--light-red);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -59,4 +127,3 @@ input:focus {
     color-scheme: dark;
   }
 }
-

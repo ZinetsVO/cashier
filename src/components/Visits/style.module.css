@@ -1,78 +1,59 @@
-.column_name_wrapper {
+.column_title_wrapper {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: start;
   text-align: left;
   padding: 15px;
   border-bottom: 2px solid var(--border-color);
+  color: var(--column-title);
+  font-size: var(--text-title);
+  font-weight: var(--weight-bold);
+
 }
 
 .visit__list {
   display: flex;
   flex-direction: column;
-
   margin-bottom: 60px;
 }
 .visit {
-  color: var(--unfocused);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid var(--border-color);
   padding: 15px 0;
   margin: 0 15px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
+  color: var(--unfocused);
+  border-bottom: 2px solid var(--border-color);
+  font-size: var(--text-small);
+  font-weight: var(--weight-normal);
 }
 
-.visit__products {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex-basis: 25%;
-}
 
-.column__name {
-  flex-basis: 25%;
-  color: var(--column-title);
-}
 
-.column__purchase,
-.column__date,
-.column__sale,
-.column__profit,
-.visit__date,
-.visit__sale,
-.visit__profit,
-.visit__purchase {
+.column__title,
+.visit__item {
   flex-basis: 15%;
-}
-
-.column__purchase,
-.column__date,
-.column__sale,
-.column__profit {
   padding-right: 5px;
-  color: var(--column-title);
 }
 
-.delete__wrapper {
-  flex-basis: 15%;
+
+
+.visit__item {
+  list-style: none;
 }
 
-.delete__button {
-  flex-basis: 15%;
-  color: #df0303;
-  background: #ffc4c4;
-  border: 1px solid #df0404;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
-  text-align: center;
-  white-space: nowrap;
-  letter-spacing: -0.14px;
-  border-radius: 4px;
-  width: 120px;
-  height: 29px;
+.column__title:nth-child(2),
+.visit__item:nth-child(2) {
+  flex-basis: 30%;
 }
+
+
+
+
+
+.delete__button__wrapper,
+.column__title:last-child
+ {
+  flex-basis: 10%;
+}
+

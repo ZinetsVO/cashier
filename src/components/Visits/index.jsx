@@ -12,6 +12,8 @@ import { uk } from "date-fns/locale/uk";
 import { VISIT_URL } from "@/helpers/constants";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useProduct } from "../Context";
+import classNames from "classnames";
 
 registerLocale("uk", uk);
 
@@ -19,6 +21,8 @@ const Visits = () => {
   const [visitData, setVisitData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [dateRange, setDateRange] = useState([null, null]);
+
+  const { fetchProducts } = useProduct();
 
   const getVisits = async () => {
     try {
@@ -29,6 +33,10 @@ const Visits = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -92,42 +100,44 @@ const Visits = () => {
 
       <FilterDate visitData={visitData} setFilteredData={setFilteredData} />
 
-      <div className={css.column_name_wrapper}>
-        <p className={css.column__date}>Date</p>
-        <p className={css.column__name}>Name</p>
-        <p className={css.column__purchase}>
-          Total purchase price: {finalPurchasePrice}
-        </p>
-        <p className={css.column__sale}>Total sale price: {finalsalePrice}</p>
-        <p className={css.column__profit}>Profit: {finalProfit}</p>
-      </div>
-
       <ul className={css.visit__list}>
+        <li className={css.column_title_wrapper}>
+          <p className={css.column__title}>Date</p>
+          <p className={css.column__title}>Name</p>
+          <p className={css.column__title}>
+            Purchase price: {finalPurchasePrice}
+          </p>
+          <p className={css.column__title}>Sale price: {finalsalePrice}</p>
+          <p className={css.column__title}>Profit: {finalProfit}</p>
+          <p className={css.column__title}>Delete</p>
+        </li>
+
         {filteredData?.map((item) => (
           <li className={css.visit} key={item.id}>
-            <span className={css.visit__date}>
+            <span className={css.visit__item}>
               {moment(item.timestamp).format("DD-MM-YY")}
             </span>
-            <ol className={css.visit__products}>
-              {item.products.map((i) => (
+            <ol className={css.visit__item}>
+              {item.products.map((i, index) => (
                 <li className={css.visit__product__name} key={i.id}>
-                  {i.name}
+                  {index + 1}. {i.name}
                 </li>
               ))}
             </ol>
-            <div className={css.visit__purchase}>
-              {item.total_purachse_price}
-            </div>
-            <div className={css.visit__sale}>{item.total_sale_price}</div>
-            <div className={css.visit__profit}>
+            <div className={css.visit__item}>{item.total_purachse_price}</div>
+            <div className={css.visit__item}>{item.total_sale_price}</div>
+            <div className={css.visit__item}>
               {item.total_sale_price - item.total_purachse_price}
             </div>
-            <div className={css.delete__wrapper}><button
-              onClick={() => handleDelete(item.id)}
-              className={css.delete__button}
-            >
-              Delete
-            </button></div>
+
+            <div className={css.delete__button__wrapper}>
+              <button
+                onClick={() => handleDelete(item.id)}
+                className={"red__button"}
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

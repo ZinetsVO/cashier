@@ -34,6 +34,8 @@ const Products = () => {
                 <th className={css.table__title}>Purchase price</th>
                 <th className={css.table__title}>Sale price</th>
                 <th className={css.table__title}>Profit</th>
+                <th className={css.table__title}>Delete</th>
+                <th className={css.table__title}>Edit</th>
               </tr>
             </thead>
             <tbody>

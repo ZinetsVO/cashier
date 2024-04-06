@@ -5,6 +5,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { useProduct } from "@/components/Context";
 import { MdEdit } from "react-icons/md";
 import AddProduct from "../AddProduct";
+import classNames from "classnames";
 
 const ProductItem = ({ product }) => {
   const { name, purchase_price, sale_price, date, id } = product;
@@ -40,8 +41,8 @@ const ProductItem = ({ product }) => {
         <td className={css.row__item}>{sale_price}</td>
         <td className={css.row__item}>{profit}</td>
         <td className={css.row__item}>
-          <button className={css.delete__button} onClick={onDelete}>
-            Delete <MdDeleteOutline size={30} />
+          <button className={classNames('red__button', css.delete__button)} onClick={onDelete}>
+            Delete<MdDeleteOutline size={30} />
           </button>
         </td>
         <td className={css.row__item}>
