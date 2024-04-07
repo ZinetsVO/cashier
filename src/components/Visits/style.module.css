@@ -1,3 +1,7 @@
+.visit__section {
+  margin-bottom: 150px;
+}
+
 .column_title_wrapper {
   display: flex;
   align-items: start;
@@ -8,7 +12,6 @@
   color: var(--column-title);
   font-size: var(--text-title);
   font-weight: var(--weight-bold);
-
 }
 
 .visit__list {
@@ -28,15 +31,11 @@
   font-weight: var(--weight-normal);
 }
 
-
-
 .column__title,
 .visit__item {
   flex-basis: 15%;
   padding-right: 5px;
 }
-
-
 
 .visit__item {
   list-style: none;
@@ -47,13 +46,11 @@
   flex-basis: 30%;
 }
 
-
-
-
-
 .delete__button__wrapper,
-.column__title:last-child
- {
+.column__title:last-child {
   flex-basis: 10%;
 }
 
+.visit__product__name::first-letter {
+  text-transform: capitalize;
+}

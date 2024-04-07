@@ -1,3 +1,7 @@
+.product__section {
+    margin-bottom: 150px;
+}
+
 .products__table {
     width: 100%;
     border-collapse: collapse;

@@ -44,6 +44,11 @@
     font-weight: var(--weight-normal);
   }
 
+  .row__item::first-letter {
+    text-transform: capitalize;
+  }
+
+
   .row__item:nth-child(1) {
     width: 65%;
   }

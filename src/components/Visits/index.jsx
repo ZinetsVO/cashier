@@ -95,53 +95,55 @@ const Visits = () => {
   }, 0);
 
   return (
-    <div className="container">
-      <CreateVisit getVisits={getVisits} />
+    <section className={css.visit__section}>
+      <div className="container">
+        <CreateVisit getVisits={getVisits} />
 
-      <FilterDate visitData={visitData} setFilteredData={setFilteredData} />
+        <FilterDate visitData={visitData} setFilteredData={setFilteredData} />
 
-      <ul className={css.visit__list}>
-        <li className={css.column_title_wrapper}>
-          <p className={css.column__title}>Date</p>
-          <p className={css.column__title}>Name</p>
-          <p className={css.column__title}>
-            Purchase price: {finalPurchasePrice}
-          </p>
-          <p className={css.column__title}>Sale price: {finalsalePrice}</p>
-          <p className={css.column__title}>Profit: {finalProfit}</p>
-          <p className={css.column__title}>Delete</p>
-        </li>
-
-        {filteredData?.map((item) => (
-          <li className={css.visit} key={item.id}>
-            <span className={css.visit__item}>
-              {moment(item.timestamp).format("DD-MM-YY")}
-            </span>
-            <ol className={css.visit__item}>
-              {item.products.map((i, index) => (
-                <li className={css.visit__product__name} key={i.id}>
-                  {index + 1}. {i.name}
-                </li>
-              ))}
-            </ol>
-            <div className={css.visit__item}>{item.total_purachse_price}</div>
-            <div className={css.visit__item}>{item.total_sale_price}</div>
-            <div className={css.visit__item}>
-              {item.total_sale_price - item.total_purachse_price}
-            </div>
-
-            <div className={css.delete__button__wrapper}>
-              <button
-                onClick={() => handleDelete(item.id)}
-                className={"red__button"}
-              >
-                Delete
-              </button>
-            </div>
+        <ul className={css.visit__list}>
+          <li className={css.column_title_wrapper}>
+            <p className={css.column__title}>Date</p>
+            <p className={css.column__title}>Name</p>
+            <p className={css.column__title}>
+              Purchase price: {finalPurchasePrice}
+            </p>
+            <p className={css.column__title}>Sale price: {finalsalePrice}</p>
+            <p className={css.column__title}>Profit: {finalProfit}</p>
+            <p className={css.column__title}>Delete</p>
           </li>
-        ))}
-      </ul>
-    </div>
+
+          {filteredData?.map((item) => (
+            <li className={css.visit} key={item.id}>
+              <span className={css.visit__item}>
+                {moment(item.timestamp).format("DD-MM-YY")}
+              </span>
+              <ol className={css.visit__item}>
+                {item.products.map((i, index) => (
+                  <li className={css.visit__product__name} key={i.id}>
+                    {index + 1}. {i.name[0].toUpperCase() + i.name.slice(1)}
+                  </li>
+                ))}
+              </ol>
+              <div className={css.visit__item}>{item.total_purachse_price}</div>
+              <div className={css.visit__item}>{item.total_sale_price}</div>
+              <div className={css.visit__item}>
+                {item.total_sale_price - item.total_purachse_price}
+              </div>
+
+              <div className={css.delete__button__wrapper}>
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className={"red__button"}
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 };
 

@@ -58,7 +58,11 @@
     text-align: left;
     font-size: var(--text-small);
     font-weight: var(--weight-normal);
+    
+  }
 
+  .row__item::first-letter {
+    text-transform: capitalize;
   }
 
   .count__wrapper {

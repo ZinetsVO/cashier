@@ -21,7 +21,7 @@ const Products = () => {
   }
 
   return (
-    <section>
+    <section className={css.product__section}>
       <div className="container">
         <AddProduct />
         {error ? (

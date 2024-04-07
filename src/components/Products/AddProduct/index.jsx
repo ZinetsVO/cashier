@@ -7,6 +7,8 @@ import { FaXmark } from "react-icons/fa6";
 import { useProduct } from "@/components/Context";
 import { MdEdit } from "react-icons/md";
 import classNames from "classnames";
+import axios from "axios";
+import { URL } from "@/helpers/constants";
 
 const AddProduct = ({ edit, product }) => {
   const { fetchProducts } = useProduct();
