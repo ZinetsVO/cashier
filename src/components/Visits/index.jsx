@@ -1,19 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CreateVisit from "./CreateVisit";
-import { visitURL } from "@/helpers/constants";
 import axios from "axios";
 import css from "./style.module.css";
 import FilterDate from "./FilterDate";
 import moment from "moment";
-import DatePicker from "react-datepicker";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import { uk } from "date-fns/locale/uk";
 import { VISIT_URL } from "@/helpers/constants";
-
+import Link from "next/link";
 import "react-datepicker/dist/react-datepicker.css";
 import { useProduct } from "../Context";
-import classNames from "classnames";
 
 registerLocale("uk", uk);
 
@@ -110,7 +107,8 @@ const Visits = () => {
             </p>
             <p className={css.column__title}>Sale price: {finalsalePrice}</p>
             <p className={css.column__title}>Profit: {finalProfit}</p>
-            <p className={css.column__title}>Delete</p>
+            <p className={css.column__title}>Actions</p>
+            
           </li>
 
           {filteredData?.map((item) => (
@@ -131,14 +129,15 @@ const Visits = () => {
                 {item.total_sale_price - item.total_purachse_price}
               </div>
 
-              <div className={css.delete__button__wrapper}>
-                <button
+              
+                <div className={css.delete__button__wrapper}><button
                   onClick={() => handleDelete(item.id)}
                   className={"red__button"}
                 >
                   Delete
                 </button>
-              </div>
+                <Link href={`/visit/${item.id}`} className="blue__button">Details</Link></div>
+              
             </li>
           ))}
         </ul>

@@ -51,6 +51,14 @@
   flex-basis: 10%;
 }
 
+.delete__button__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: start;
+
+}
+
 .visit__product__name::first-letter {
   text-transform: capitalize;
 }
