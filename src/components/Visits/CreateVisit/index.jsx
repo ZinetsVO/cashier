@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import css from "./style.module.css";
 import { useProduct } from "@/components/Context";
 import VisitTable from "../VisitTable";
@@ -18,6 +18,7 @@ const CreateVisit = ({ getVisits }) => {
   const [visit, setVisit] = useState([]);
   const [findProduct, setFindProduct] = useState("");
   const [selectDate, setSelectDate] = useState(new Date());
+  const [commentText, setCommentText] = useState("")
 
   const { products, error } = useProduct();
 
@@ -71,6 +72,8 @@ const CreateVisit = ({ getVisits }) => {
       timestamp: selectDate,
       total_purachse_price: totalPurchasePrice,
       total_sale_price: totalSalePrice,
+      comment: commentText
+
     };
 
     console.log(data);
