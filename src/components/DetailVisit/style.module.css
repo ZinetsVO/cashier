@@ -19,6 +19,13 @@
     margin-left: auto;
 }
 
+.top__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .product__item {
   width: 100%;
   display: flex;
@@ -41,6 +48,11 @@
 .item__prop,
 .item__title {
   flex-basis: 12%;
+}
+
+.item__prop::first-letter,
+.item__title::first-letter {
+  text-transform: capitalize;
 }
 
 .item__prop:nth-child(1),

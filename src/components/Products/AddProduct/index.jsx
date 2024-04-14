@@ -9,6 +9,7 @@ import { MdEdit } from "react-icons/md";
 import classNames from "classnames";
 import axios from "axios";
 import { URL } from "@/helpers/constants";
+import PopUp from "@/components/ui/PopUp";
 
 const AddProduct = ({ edit, product }) => {
   const { fetchProducts } = useProduct();
@@ -23,8 +24,8 @@ const AddProduct = ({ edit, product }) => {
     : {
         id: uuidv4(),
         name: "",
-        purchase_price: 0,
-        sale_price: 0,
+        purchase_price: "",
+        sale_price: "",
       };
 
   const [show, setShow] = useState(false);
@@ -35,7 +36,7 @@ const AddProduct = ({ edit, product }) => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    const newValue = type === "number" ? +value : value;
+    const newValue = type === "number" && value.length > 0 ? +value : value;
 
     setFormData((prevData) => ({
       ...prevData,
@@ -114,15 +115,16 @@ const AddProduct = ({ edit, product }) => {
       >
         {edit ? <MdEdit size={30} /> : "Create product"}
       </button>
-      {!show ? (
-        ""
-      ) : (
+      <PopUp isOpen={show} setIsOpen={setShow}>
         <div className={css.form__bg} onClick={handleShow}>
           <div
             className={css.form__wrapper}
             onClick={(e) => e.stopPropagation()}
           >
-            <button onClick={handleShow} className={classNames(css.close__button, 'red__button')}>
+            <button
+              onClick={handleShow}
+              className={classNames(css.close__button, "red__button")}
+            >
               <FaXmark size={30} />
               Close
             </button>
@@ -165,13 +167,16 @@ const AddProduct = ({ edit, product }) => {
                 />
               </label>
 
-              <button className={classNames(css.confirm__button, 'blue__button')} disabled={isDisabled}>
-                {edit? 'Edit': 'Add'}
+              <button
+                className={classNames(css.confirm__button, "blue__button")}
+                disabled={isDisabled}
+              >
+                {edit ? "Edit" : "Add"}
               </button>
             </form>
           </div>
         </div>
-      )}
+      </PopUp>
     </>
   );
 };

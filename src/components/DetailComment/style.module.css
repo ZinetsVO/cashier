@@ -18,6 +18,9 @@
   transition: all 0.3s;
   color: var( --unfocused);
   opacity: 0.9;
+
+  width: 90%;
+  margin: 0 auto;
 }
 
 .comment__input:focus {

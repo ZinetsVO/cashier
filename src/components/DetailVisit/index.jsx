@@ -9,12 +9,13 @@ import DetailPopup from "@/components/DetailPopup";
 import DetailList from "./DetailList";
 import toast, { Toaster } from "react-hot-toast";
 import DetailComment from "../DetailComment";
+import moment from "moment";
 
 const DetailVisit = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [showPopup, setShowPopup] = useState(false);
-  const [comment, setComment] = useState("")
+  const [comment, setComment] = useState("");
 
   console.log(data);
 
@@ -23,7 +24,7 @@ const DetailVisit = () => {
       const response = await axios.get(`${VISIT_URL}/${id}`);
       if (response) {
         setData(response.data);
-        setComment(response.data.comment)
+        setComment(response.data.comment);
       }
     } catch (e) {
       console.error(e);
@@ -31,8 +32,7 @@ const DetailVisit = () => {
   };
 
   const handleChange = async (id, formData) => {
-
-    const newData = {...formData, comment: comment}
+    const newData = { ...formData, comment: comment };
     console.log(newData);
     try {
       const response = await axios.put(`${VISIT_URL}/${id}`, newData, {
@@ -73,15 +73,18 @@ const DetailVisit = () => {
           id={id}
         />
       )}
-      <button
-        onClick={() => handleChange(id, data)}
-        className={classNames("blue__button", css.save__button)}
-      >
-        Save changes
-      </button>
+      <div className={css.top__wrapper}>
+        <span>Date: {moment(data.timestamp).format("DD-MM-YY")}</span>
+        <button
+          onClick={() => handleChange(id, data)}
+          className={classNames("blue__button", css.save__button)}
+        >
+          Save changes
+        </button>
+      </div>
       <Toaster position="top-center" reverseOrder={false} />
       <DetailList data={data} />
-      <DetailComment comment={comment} setComment={setComment}/>
+      <DetailComment comment={comment} setComment={setComment} />
     </div>
   );
 };
