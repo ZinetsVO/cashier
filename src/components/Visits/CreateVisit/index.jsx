@@ -12,11 +12,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import classNames from "classnames";
 import { FaXmark } from "react-icons/fa6";
 import DetailComment from "@/components/DetailComment";
+import PopUp from "@/components/ui/PopUp";
 
 const CreateVisit = ({ getVisits }) => {
   const [show, setShow] = useState(false);
   const [visit, setVisit] = useState([]);
-  const [findProduct, setFindProduct] = useState("");
   const [selectDate, setSelectDate] = useState(new Date());
   const [commentText, setCommentText] = useState("");
 
@@ -87,63 +87,58 @@ const CreateVisit = ({ getVisits }) => {
 
   return (
     <>
-      {!show ? (
-        <button
-          className={classNames("blue__button", css.create__visit__button)}
-          onClick={handleShow}
-        >
-          Create visit
-        </button>
-      ) : (
-        <>
-          <div className={css.popup__bg} onClick={handleShow}>
-            <div className={css.popup} onClick={(e) => e.stopPropagation()}>
-              <div className={css.top__wrapper}>
-                <button
-                  className={classNames(css.button__close, "red__button")}
-                  onClick={handleShow}
-                >
-                  Close
-                  <FaXmark size={30} />
-                </button>
-                <DatePicker
-                  wrapperClassName={css.date__wrapper}
-                  className={css.date}
-                  selected={selectDate}
-                  onChange={(date) => setSelectDate(date)}
-                  selectsStart
-                  dateFormat={"dd-MM-yy"}
-                  placeholderText="Enter date"
-                  locale={"uk"}
-                />
-                <button
-                  className={classNames(css.button__submit, "blue__button")}
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
-              </div>
+      <button
+        className={classNames("blue__button", css.create__visit__button)}
+        onClick={handleShow}
+      >
+        Create visit
+      </button>
 
-              <DetailComment
-                comment={commentText}
-                setComment={setCommentText}
+      <PopUp isOpen={show} setIsOpen={setShow}>
+        <div className={css.popup__bg} onClick={handleShow}>
+          <div className={css.popup} onClick={(e) => e.stopPropagation()}>
+            <div className={css.top__wrapper}>
+              <button
+                className={classNames(css.button__close, "red__button")}
+                onClick={handleShow}
+              >
+                Close
+                <FaXmark size={30} />
+              </button>
+              <DatePicker
+                wrapperClassName={css.date__wrapper}
+                className={css.date}
+                selected={selectDate}
+                onChange={(date) => setSelectDate(date)}
+                selectsStart
+                dateFormat={"dd-MM-yy"}
+                placeholderText="Enter date"
+                locale={"uk"}
               />
+              <button
+                className={classNames(css.button__submit, "blue__button")}
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            </div>
 
-              <div className={css.tables__wrapper}>
-                <ProductTable handleVisit={handleVisit} />
+            <DetailComment comment={commentText} setComment={setCommentText} />
 
-                <VisitTable
-                  visit={visit}
-                  setVisit={setVisit}
-                  handleDelete={handleDelete}
-                />
-              </div>
-        
+            <div className={css.tables__wrapper}>
+              <ProductTable handleVisit={handleVisit} />
+
+              <VisitTable
+                visit={visit}
+                setVisit={setVisit}
+                handleDelete={handleDelete}
+              />
             </div>
           </div>
-        </>
-      )}
-       <Toaster position="top-center" reverseOrder={false} />
+        </div>
+      </PopUp>
+
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 };

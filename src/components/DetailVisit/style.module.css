@@ -59,3 +59,35 @@
 .item__title:nth-child(1) {
   flex-basis: 52%;
 }
+
+
+.count__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+
+.button__decrement {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+}
+
+.count__text {
+  width: 2ch;
+  text-align: center;
+}
+
+.button__increment {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+}

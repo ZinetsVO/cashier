@@ -1,25 +1,24 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import ProductItem from "./ProductItem";
 import css from "./style.module.css";
 import AddProduct from "./AddProduct";
-
+import { URL } from "@/helpers/constants";
 import { useProduct } from "../Context";
+import axios from "axios";
+
 
 const Products = () => {
+  const { products, error, fetchProducts } = useProduct();
 
- const {products, error, fetchProducts} = useProduct()
-
- useEffect(() => {
-  fetchProducts();
-}, []);
-
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   if (error) {
     return <p>Помилка при отриманні даних: {error}</p>;
   }
-
   return (
     <section className={css.product__section}>
       <div className="container">

@@ -1,8 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import css from "./style.module.css";
-import { IoAddCircleOutline } from "react-icons/io5";
-import { IoMdCheckmark } from "react-icons/io";
 import { FaXmark } from "react-icons/fa6";
 import { useProduct } from "@/components/Context";
 import { MdEdit } from "react-icons/md";
@@ -10,6 +8,7 @@ import classNames from "classnames";
 import axios from "axios";
 import { URL } from "@/helpers/constants";
 import PopUp from "@/components/ui/PopUp";
+import toast, { Toaster } from "react-hot-toast";
 
 const AddProduct = ({ edit, product }) => {
   const { fetchProducts } = useProduct();
@@ -28,6 +27,24 @@ const AddProduct = ({ edit, product }) => {
         sale_price: "",
       };
 
+  const handleEdit = useCallback(
+    (id, formData) => {
+      try {
+        const response = axios.put(`${URL}/${id}`, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        fetchProducts();
+
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [fetchProducts]
+  );
+
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState(defaultData);
 
@@ -43,23 +60,9 @@ const AddProduct = ({ edit, product }) => {
       [name]: newValue,
     }));
   };
-
-  const handleEdit = useCallback(
-    (id, formData) => {
-      try {
-        const response = axios.put(`${URL}/${id}`, formData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        fetchProducts();
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [fetchProducts]
-  );
+  const handleShow = () => {
+    setShow(!show);
+  };
 
   const handleSubmit = useCallback(async (formData) => {
     try {
@@ -78,34 +81,46 @@ const AddProduct = ({ edit, product }) => {
     e.preventDefault();
 
     if (edit) {
-      const success = await handleEdit(defaultData.id, formData);
-      if (success) {
-        setFormData((prevData) => ({
-          id: prevData.id,
-          name: prevData.name,
-          purchase_price: prevData.purchase_price,
-          sale_price: prevData.sale_price,
-        }));
+      try {
+        const success = await handleEdit(defaultData.id, formData);
+        if (success) {
+          
+          setFormData((prevData) => ({
+            id: prevData.id,
+            name: prevData.name,
+            purchase_price: prevData.purchase_price,
+            sale_price: prevData.sale_price,
+          }));
+          handleShow();
+          toast.success("successfully edited!");
+        }
+      } catch (error) {
+        handleShow();
+        toast.error("edit failed!");
       }
     } else {
-      const success = await handleSubmit(formData);
-      if (success) {
-        setFormData(() => ({
-          id: uuidv4(),
-          name: "",
-          purchase_price: 0,
-          sale_price: 0,
-        }));
+      try {
+        const success = await handleSubmit(formData);
+        if (success) {
+      
+          setFormData(() => ({
+            id: uuidv4(),
+            name: "",
+            purchase_price: 0,
+            sale_price: 0,
+          }));
+          fetchProducts();
+          handleShow(); 
+             toast.success("successfully added");
+        }
+      } catch (error) {
+        handleShow();
+        toast.error("add failed!");
       }
     }
-
-    fetchProducts();
-    handleShow();
   };
 
-  const handleShow = () => {
-    setShow(!show);
-  };
+
 
   return (
     <>
@@ -115,6 +130,7 @@ const AddProduct = ({ edit, product }) => {
       >
         {edit ? <MdEdit size={30} /> : "Create product"}
       </button>
+
       <PopUp isOpen={show} setIsOpen={setShow}>
         <div className={css.form__bg} onClick={handleShow}>
           <div
@@ -177,6 +193,7 @@ const AddProduct = ({ edit, product }) => {
           </div>
         </div>
       </PopUp>
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 };
