@@ -4,8 +4,12 @@ import css from "./style.module.css";
 import { FaMinus } from "react-icons/fa6";
 import classNames from "classnames";
 import { IoMdAdd } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
 
-const DetailList = ({ data, decrement, increment }) => {
+const DetailList = ({ data, decrement, increment, handleDelete }) => {
+
+
+
   return (
     <ul className={css.product__list}>
       <li className={css.product__item}>
@@ -14,6 +18,8 @@ const DetailList = ({ data, decrement, increment }) => {
         <span className={css.item__title}>Purchase price</span>
         <span className={css.item__title}>Sale price</span>
         <span className={css.item__title}>Profit</span>
+        <span className={css.item__title}>Delete</span>
+
       </li>
       {data.products?.map((item) => (
         <li className={css.product__item} key={item.id}>
@@ -42,6 +48,7 @@ const DetailList = ({ data, decrement, increment }) => {
           <span className={css.item__prop}>
             {item.sale_price - item.purchase_price}
           </span>
+          <button onClick={ () => handleDelete(item.id)} className={classNames("red__button", css.delete__button) }> <MdDeleteOutline size={30} /></button>
         </li>
       ))}
     </ul>

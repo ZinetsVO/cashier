@@ -20,38 +20,39 @@ const ProductItem = ({ product }) => {
   const handleDelete = useCallback((id) => {
     try {
       const response = axios.delete(`${URL}/${id}`);
-      toast.success("Deleted successfully!");
+
       return response;
     } catch (error) {
       console.error(error);
     }
   }, []);
 
-  const onConfirm = async () =>  {
+  const onConfirm = async (t) => {
+    toast.dismiss(t.id);
     const response = await handleDelete(id);
-              if (response.status >= 200 && response.status < 300) {
-                fetchProducts();
-              }
-              toast.dismiss(t.id);
-  }
+    
+    if (response.status >= 200 && response.status < 300) {
+      fetchProducts();
+      toast.success("Deleted successfully!");
+    }
+  };
 
-  const onDelete = async () => {
+  const onDelete = () => {
     toast(
       (t) => (
-        <>
-          <h5>Are you sure?</h5>
-          <button
-            className="blue__button"
-            onClick={async () => {await onConfirm
-            }}
-          >
+        <div className={css.toaster}>
+          <h5 className={css.toaster__text}>Are you sure you want to delete "{name}"?</h5>
+          <div className={css.toaster__button__wrapper}><button className={classNames("blue__button", css.toaster__button)} onClick={() => onConfirm(t)}>
             Confirm
           </button>
-          <button className="red__button" onClick={() => toast.dismiss(t.id)}>No!</button>
-        </>
+          <button className={classNames("red__button", css.toaster__button)} onClick={() => toast.dismiss(t.id)}>
+            Cancel
+          </button></div>
+        </div>
       ),
       {
         icon: <BsQuestionCircle size={20} />,
+        duration: 10000,
       }
     );
   };
@@ -71,7 +72,7 @@ const ProductItem = ({ product }) => {
             Delete
             <MdDeleteOutline size={30} />
           </button>
-          <Toaster position="top-center" reverseOrder={false} />
+         
         </td>
         <td className={css.row__item}>
           <AddProduct edit product={product} />

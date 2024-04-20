@@ -65,9 +65,15 @@ const DetailVisit = () => {
         }
         return item;
       });
-      return {...prevData, products: updateData};
+      return { ...prevData, products: updateData };
     });
+  };
 
+  const handleDelete = (id) => {
+    setData((prevData) => {
+      const updateData = prevData.products.filter((item) => item.id != id);
+      return { ...prevData, products: updateData };
+    });
   };
 
   const decrement = (id) => {
@@ -78,30 +84,27 @@ const DetailVisit = () => {
         }
         return item;
       });
-      return {...prevData, products: updateData};
+      return { ...prevData, products: updateData };
     });
   };
 
   return (
     <div className="container">
-      
-        <button
-          className={classNames("blue__button", css.add__button)}
-          onClick={handleShowPopup}
-        >
-          Add product
-        </button>
- 
-       
-       <DetailPopup
-          data={data}
-          setData={setData}
-          showPopup={showPopup}
-          setShowPopup={setShowPopup}
-          id={id}
-        />
-    
-     
+      <button
+        className={classNames("blue__button", css.add__button)}
+        onClick={handleShowPopup}
+      >
+        Add product
+      </button>
+
+      <DetailPopup
+        data={data}
+        setData={setData}
+        showPopup={showPopup}
+        setShowPopup={setShowPopup}
+        id={id}
+      />
+
       <div className={css.top__wrapper}>
         <span>Date: {moment(data.timestamp).format("DD-MM-YY")}</span>
         <button
@@ -111,7 +114,12 @@ const DetailVisit = () => {
           Save changes
         </button>
       </div>
-      <DetailList data={data} increment={increment} decrement={decrement}/>
+      <DetailList
+        data={data}
+        increment={increment}
+        decrement={decrement}
+        handleDelete={handleDelete}
+      />
 
       <DetailComment comment={comment} setComment={setComment} />
       <Toaster position="top-center" reverseOrder={false} />

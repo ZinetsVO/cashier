@@ -11,6 +11,9 @@ import { VISIT_URL } from "@/helpers/constants";
 import Link from "next/link";
 import "react-datepicker/dist/react-datepicker.css";
 import { useProduct } from "../Context";
+import toast, { Toaster } from "react-hot-toast";
+import { BsQuestionCircle } from "react-icons/bs";
+import classNames from "classnames";
 
 registerLocale("uk", uk);
 
@@ -35,49 +38,53 @@ const Visits = () => {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (id) => {
+  const onConfirm = async (t, id) => {
+    toast.dismiss(t.id);
     try {
       const response = await axios.delete(`${VISIT_URL}/${id}`);
       if (response) {
         getVisits();
+        toast.success("Deleted successfully!");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Delete failed!");
     }
+  };
+
+  const handleDelete = (id, name) => {
+    toast(
+      (t) => (
+        <div className={css.toaster}>
+          <h5 className={css.toaster__text}>
+            Are you sure you want to delete "{name}"?
+          </h5>
+          <div className={css.toaster__button__wrapper}>
+            <button
+              className={classNames("blue__button", css.toaster__button)}
+              onClick={() => onConfirm(t, id)}
+            >
+              Confirm
+            </button>
+            <button
+              className={classNames("red__button", css.toaster__button)}
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        icon: <BsQuestionCircle size={20} />,
+        duration: 10000,
+      }
+    );
   };
 
   useEffect(() => {
     getVisits();
   }, []);
-
-  const handleStartDate = (date) => {
-    setDateRange([date, dateRange[1]]);
-    filtered();
-  };
-
-  const handleEndDate = (date) => {
-    setDateRange([dateRange[0], date]);
-    filtered();
-  };
-
-  const filtered = () => {
-    const newData = visitData.filter((item) => {
-      if (dateRange[0] && dateRange[1]) {
-        return moment(item.timestamp).isBetween(
-          dateRange[0],
-          dateRange[1],
-          null,
-          "[]"
-        );
-      }
-      return true;
-    });
-
-    setFilteredData(newData);
-
-    console.log(newData);
-    console.log("filter done!");
-  };
 
   const finalPurchasePrice = filteredData?.reduce((prevValue, item) => {
     return prevValue + item.total_purachse_price;
@@ -108,7 +115,6 @@ const Visits = () => {
             <p className={css.column__title}>Sale price: {finalsalePrice}</p>
             <p className={css.column__title}>Profit: {finalProfit}</p>
             <p className={css.column__title}>Actions</p>
-            
           </li>
 
           {filteredData?.map((item) => (
@@ -129,19 +135,22 @@ const Visits = () => {
                 {item.total_sale_price - item.total_purachse_price}
               </div>
 
-              
-                <div className={css.delete__button__wrapper}><button
-                  onClick={() => handleDelete(item.id)}
+              <div className={css.delete__button__wrapper}>
+                <button
+                  onClick={() => handleDelete(item.id, item.name)}
                   className={"red__button"}
                 >
                   Delete
                 </button>
-                <Link href={`/visit/${item.id}`} className="blue__button">Details</Link></div>
-              
+                <Link href={`/visit/${item.id}`} className="blue__button">
+                  Details
+                </Link>
+              </div>
             </li>
           ))}
         </ul>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </section>
   );
 };

@@ -84,7 +84,6 @@ const AddProduct = ({ edit, product }) => {
       try {
         const success = await handleEdit(defaultData.id, formData);
         if (success) {
-          
           setFormData((prevData) => ({
             id: prevData.id,
             name: prevData.name,
@@ -102,7 +101,6 @@ const AddProduct = ({ edit, product }) => {
       try {
         const success = await handleSubmit(formData);
         if (success) {
-      
           setFormData(() => ({
             id: uuidv4(),
             name: "",
@@ -110,8 +108,8 @@ const AddProduct = ({ edit, product }) => {
             sale_price: 0,
           }));
           fetchProducts();
-          handleShow(); 
-             toast.success("successfully added");
+          handleShow();
+          toast.success("successfully added");
         }
       } catch (error) {
         handleShow();
@@ -119,8 +117,6 @@ const AddProduct = ({ edit, product }) => {
       }
     }
   };
-
-
 
   return (
     <>
@@ -193,7 +189,6 @@ const AddProduct = ({ edit, product }) => {
           </div>
         </div>
       </PopUp>
-      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 };

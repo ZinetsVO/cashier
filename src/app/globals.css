@@ -20,7 +20,8 @@
   --white: #ffffff;
   --blured: rgba(0, 0, 0, 0.5);
   --unfocused: #292d32;
-
+  --disbled-bg: #E5E5E5;
+  --disabled-color: #B1B1B1;
 
 }
 
@@ -123,6 +124,19 @@ body::-webkit-scrollbar-thumb {
   color: var(--light-red);
   background-color: var(--red);
   border: 1px solid var(--light-red);
+}
+
+.red__button:disabled,
+.blue__button:disabled,
+.blue__button:disabled a,
+.red__button:disabled a {
+
+  color: var(--disabled-color);
+  background-color: var(--disbled-bg);
+  border: 1px solid var(--disabled-color);
+  transition: all .3s;
+  cursor: not-allowed;
+
 }
 
 @media (prefers-color-scheme: dark) {

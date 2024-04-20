@@ -7,7 +7,7 @@ import AddProduct from "./AddProduct";
 import { URL } from "@/helpers/constants";
 import { useProduct } from "../Context";
 import axios from "axios";
-
+import { Toaster } from "react-hot-toast";
 
 const Products = () => {
   const { products, error, fetchProducts } = useProduct();
@@ -44,6 +44,7 @@ const Products = () => {
             </tbody>
           </table>
         )}
+        <Toaster position="top-center" reverseOrder={false} />
       </div>
     </section>
   );
