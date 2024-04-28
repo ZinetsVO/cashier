@@ -105,7 +105,7 @@ const Visits = () => {
 
         <FilterDate visitData={visitData} setFilteredData={setFilteredData} />
 
-        <ul className={css.visit__list}>
+        <div className={css.list__wrapper}><ul className={css.visit__list}>
           <li className={css.column_title_wrapper}>
             <p className={css.column__title}>Date</p>
             <p className={css.column__title}>Name</p>
@@ -148,7 +148,7 @@ const Visits = () => {
               </div>
             </li>
           ))}
-        </ul>
+        </ul></div>
       </div>
       <Toaster position="top-center" reverseOrder={false} />
     </section>

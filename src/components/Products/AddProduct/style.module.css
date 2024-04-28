@@ -25,7 +25,7 @@
   z-index: 2;
   margin: 40px;
   background-color: var(--bg-color);
-  box-shadow: 0 60px 80px rgba(0,0,0,0.60), 0 45px 26px rgba(0,0,0,0.14);
+  box-shadow: 0 60px 80px rgba(0, 0, 0, 0.6), 0 45px 26px rgba(0, 0, 0, 0.14);
 }
 
 .form {
@@ -39,8 +39,8 @@
 }
 
 .add__button {
-   margin-bottom: 40px;
-   font-size: var(--text-paragraph);
+  margin-bottom: 40px;
+  font-size: var(--text-paragraph);
 }
 
 .edit__button {
@@ -70,15 +70,18 @@
   margin-top: 5px;
   padding: 10px;
   max-width: 300px;
-  width: 300px;
   height: 30px;
   border-radius: 5px;
   border: 1px solid var(--unfocused);
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .form__input:focus {
   border: 1px solid var(--unfocused);
-
 }
 
+@media screen and (min-width: 425px) {
+  .form__input {
+    width: 300px;
+  }
+}

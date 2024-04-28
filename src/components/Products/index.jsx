@@ -26,23 +26,25 @@ const Products = () => {
         {error ? (
           <p>Помилка при отриманні даних: {error}</p>
         ) : (
-          <table className={css.products__table}>
-            <thead>
-              <tr>
-                <th className={css.table__title}>Name</th>
-                <th className={css.table__title}>Purchase price</th>
-                <th className={css.table__title}>Sale price</th>
-                <th className={css.table__title}>Profit</th>
-                <th className={css.table__title}>Delete</th>
-                <th className={css.table__title}>Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products?.map((product) => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-            </tbody>
-          </table>
+          <div className={css.table__wrapper}>
+            <table className={css.products__table}>
+              <thead>
+                <tr>
+                  <th className={css.table__title}>Name</th>
+                  <th className={css.table__title}>Purchase price</th>
+                  <th className={css.table__title}>Sale price</th>
+                  <th className={css.table__title}>Profit</th>
+                  <th className={css.table__title}>Delete</th>
+                  <th className={css.table__title}>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products?.map((product) => (
+                  <ProductItem key={product.id} product={product} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
         <Toaster position="top-center" reverseOrder={false} />
       </div>

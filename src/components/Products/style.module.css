@@ -1,5 +1,10 @@
+.table__wrapper {
+    overflow-x: auto;
+}
+
 .product__section {
     margin-bottom: 150px;
+    padding-top: 60px;
 }
 
 .products__table {

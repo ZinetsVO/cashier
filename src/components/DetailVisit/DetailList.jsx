@@ -11,7 +11,8 @@ const DetailList = ({ data, decrement, increment, handleDelete }) => {
 
 
   return (
-    <ul className={css.product__list}>
+   <div className={css.list__wrapper}>
+     <ul className={css.product__list}>
       <li className={css.product__item}>
         <span className={css.item__title}>Name</span>
         <span className={css.item__title}>Count</span>
@@ -52,6 +53,7 @@ const DetailList = ({ data, decrement, increment, handleDelete }) => {
         </li>
       ))}
     </ul>
+   </div>
   );
 };
 

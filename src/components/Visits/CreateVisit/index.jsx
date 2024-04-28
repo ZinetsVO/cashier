@@ -126,13 +126,17 @@ const CreateVisit = ({ getVisits }) => {
             <DetailComment comment={commentText} setComment={setCommentText} />
 
             <div className={css.tables__wrapper}>
-              <ProductTable handleVisit={handleVisit} />
+              <div className={css.scroll__wrapper}>
+                <ProductTable handleVisit={handleVisit} />
+              </div>
 
-              <VisitTable
-                visit={visit}
-                setVisit={setVisit}
-                handleDelete={handleDelete}
-              />
+              <div className={css.scroll__wrapper}>
+                <VisitTable
+                  visit={visit}
+                  setVisit={setVisit}
+                  handleDelete={handleDelete}
+                />
+              </div>
             </div>
           </div>
         </div>

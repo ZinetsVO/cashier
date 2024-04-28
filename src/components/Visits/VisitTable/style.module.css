@@ -40,6 +40,8 @@
 
   .visits__table {
     border-collapse: collapse;
+    width:100%;
+    min-width: 750px;
   } 
   
   .row {
@@ -77,5 +79,6 @@
     border-bottom: 2px solid var(--border-color);
     color: var(--column-title);
     text-align: left;
+    white-space: nowrap;
   }
 

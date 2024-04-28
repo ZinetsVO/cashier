@@ -1,6 +1,11 @@
+.list__wrapper {
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
+
 .product__list {
   width: 100%;
-  margin-bottom: 40px;
+  min-width: 750px;
 }
 
 
@@ -53,6 +58,7 @@
 .item__prop,
 .item__title {
   flex-basis: 10%;
+  padding-right: 5px;
 }
 
 .item__prop::first-letter,
@@ -62,9 +68,13 @@
 
 .item__prop:nth-child(1),
 .item__title:nth-child(1) {
-  flex-basis: 50%;
+  flex-basis: 45%;
 }
 
+.item__prop:nth-child(2),
+.item__title:nth-child(2) {
+  flex-basis: 15%;
+}
 
 .count__wrapper {
   display: flex;
