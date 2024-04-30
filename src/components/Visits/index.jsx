@@ -52,12 +52,14 @@ const Visits = () => {
     }
   };
 
-  const handleDelete = (id, name) => {
+  console.log("filteredData",filteredData);
+
+  const handleDelete = (id) => {
     toast(
       (t) => (
         <div className={css.toaster}>
           <h5 className={css.toaster__text}>
-            Are you sure you want to delete "{name}"?
+            Are you sure you want to delete the visit?`
           </h5>
           <div className={css.toaster__button__wrapper}>
             <button
@@ -124,6 +126,7 @@ const Visits = () => {
               </span>
               <ol className={css.visit__item}>
                 {item.products.map((i, index) => (
+                  
                   <li className={css.visit__product__name} key={i.id}>
                     {index + 1}. {i.name[0].toUpperCase() + i.name.slice(1)}
                   </li>
@@ -137,7 +140,7 @@ const Visits = () => {
 
               <div className={css.delete__button__wrapper}>
                 <button
-                  onClick={() => handleDelete(item.id, item.name)}
+                  onClick={() => handleDelete(item.id)}
                   className={"red__button"}
                 >
                   Delete
